@@ -498,6 +498,40 @@
     return d.toLocaleDateString('pt-BR', { year:'numeric', month:'long' });
   }
 
+  async function listarArquivosRecursivo(folderId, profundidade){
+    profundidade = profundidade || 0;
+    if(profundidade > 4) return []; // limite de segurança contra loops
+
+    const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
+    const fields = encodeURIComponent('files(id,name,modifiedTime,webViewLink,webContentLink,mimeType)');
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=modifiedTime desc&pageSize=200&key=${DRIVE_API_KEY}`;
+    const resp = await fetch(url);
+    if(!resp.ok) throw new Error('Falha na API do Drive: ' + resp.status);
+    const data = await resp.json();
+    const itens = data.files || [];
+
+    let arquivos = [];
+    const subpastas = [];
+
+    itens.forEach(item => {
+      if(item.mimeType === 'application/vnd.google-apps.folder'){
+        subpastas.push(item.id);
+      }else{
+        arquivos.push(item);
+      }
+    });
+
+    // Busca dentro de cada subpasta (ex: pastas de ano/semestre) em paralelo
+    if(subpastas.length > 0){
+      const resultados = await Promise.all(
+        subpastas.map(id => listarArquivosRecursivo(id, profundidade + 1))
+      );
+      resultados.forEach(lista => { arquivos = arquivos.concat(lista); });
+    }
+
+    return arquivos;
+  }
+
   async function carregarTabela(secao){
     const folderId = secao.dataset.folder;
     const cor = secao.dataset.cor;
@@ -515,13 +549,10 @@
     wrap.innerHTML = '<div class="estado-msg">Carregando atas…</div>';
 
     try{
-      const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
-      const fields = encodeURIComponent('files(id,name,modifiedTime,webViewLink,webContentLink,mimeType)');
-      const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=modifiedTime desc&pageSize=200&key=${DRIVE_API_KEY}`;
-      const resp = await fetch(url);
-      if(!resp.ok) throw new Error('Falha na API do Drive: ' + resp.status);
-      const data = await resp.json();
-      const arquivos = data.files || [];
+      const arquivos = await listarArquivosRecursivo(folderId);
+
+      // Ordena do mais recente para o mais antigo (cobre arquivos vindos de subpastas diferentes)
+      arquivos.sort((a, b) => new Date(b.modifiedTime) - new Date(a.modifiedTime));
 
       if(arquivos.length === 0){
         wrap.innerHTML = '<div class="estado-msg">Nenhuma ata encontrada nesta pasta ainda.</div>';
