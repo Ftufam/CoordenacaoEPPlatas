@@ -174,7 +174,7 @@
     outline-offset:2px;
   }
   .btn-home{background:linear-gradient(135deg, var(--dourado), var(--dourado-escuro));}
-  .btn-curso{background:linear-gradient(135deg, var(--azul-claro), var(--azul-escuro));}
+  .btn-curso{background:var(--azul-claro);}
   .btn-dep{background:linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));}
   .btn-nde{background:linear-gradient(135deg, var(--violeta), var(--violeta-escuro));}
   .btn-rits{background:linear-gradient(135deg, var(--rits), var(--rits-escuro));}
@@ -345,6 +345,22 @@
     filter:brightness(1.1);
     transform:scale(1.05);
   }
+  .barra-busca button.btn-limpar{
+    width:auto;
+    border-radius:22px;
+    padding:0 18px;
+    background:#fff;
+    color:var(--texto);
+    border:1.5px solid #ddd6c4;
+    font-size:0.9rem;
+    font-weight:700;
+  }
+  .barra-busca button.btn-limpar:hover{
+    background:#FAF7EE;
+    border-color:var(--cor-secao, var(--azul-claro));
+    filter:none;
+    transform:none;
+  }
   .busca-info{
     text-align:center;
     font-size:0.85rem;
@@ -384,6 +400,70 @@
   @media (hover:none){
     #preview-flutuante{display:none !important;}
   }
+
+  /* ===== MODAL GRANDE (clique em Visualizar) ===== */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,18,15,0.78);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:10000;
+    padding:20px;
+  }
+  .modal-overlay.aberto{
+    display:flex;
+  }
+  .modal-conteudo{
+    position:relative;
+    width:min(1000px, 94vw);
+    height:90vh;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .modal-conteudo iframe{
+    width:100%;
+    height:100%;
+    border:none;
+  }
+  .modal-fechar{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:none;
+    background:rgba(0,0,0,0.55);
+    color:#fff;
+    font-size:1.2rem;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+    transition:background .15s, transform .15s;
+  }
+  .modal-fechar:hover{
+    background:rgba(0,0,0,0.8);
+    transform:scale(1.08);
+  }
+  .modal-carregando{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8a8478;
+    font-size:1rem;
+    background:#fff;
+  }
+  @media (max-width:720px){
+    .modal-conteudo{width:100vw; height:100vh; border-radius:0;}
+  }
   .tabela-wrap{
     padding:14px;
     overflow-x:auto;
@@ -406,8 +486,8 @@
     letter-spacing:0.6px;
     text-transform:uppercase;
     color:#fff;
-    background:linear-gradient(135deg, var(--cor-secao, var(--azul-claro)), var(--cor-secao-escura, var(--azul-escuro)));
-    border-bottom:3px solid rgba(0,0,0,0.12);
+    background:var(--cor-secao, var(--azul-claro));
+    border-bottom:3px solid var(--cor-secao-escura, var(--azul-escuro));
     position:sticky;
     top:0;
   }
@@ -456,6 +536,7 @@
     box-shadow:0 2px 6px rgba(0,0,0,0.10);
     transition:filter .15s, transform .15s, box-shadow .15s;
     white-space:nowrap;
+    cursor:pointer;
   }
   .acao-btn:hover{
     filter:brightness(1.08);
@@ -464,13 +545,14 @@
   }
   .acao-btn.secundario{
     background:#fff;
-    color:var(--texto);
-    border:1.5px solid #ddd6c4;
+    color:var(--cor-secao-escura, var(--texto));
+    border:1.5px solid var(--cor-secao, #ddd6c4);
     box-shadow:none;
   }
   .acao-btn.secundario:hover{
-    background:#FAF7EE;
-    border-color:var(--cor-secao, var(--azul-claro));
+    background:var(--cor-secao, #FAF7EE);
+    color:#fff;
+    border-color:var(--cor-secao-escura, var(--azul-claro));
   }
   .estado-msg{
     text-align:center;
@@ -556,8 +638,9 @@
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do Curso</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="barra-busca" style="--cor-secao:var(--azul-claro);">
-      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
       <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
     </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
@@ -570,8 +653,9 @@
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do DEP</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="barra-busca" style="--cor-secao:var(--verde-claro);">
-      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
       <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
     </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
@@ -584,8 +668,9 @@
     <div class="secao-header"><h2 class="secao-titulo">NDE — Núcleo Docente Estruturante</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="barra-busca" style="--cor-secao:var(--violeta);">
-      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
       <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
     </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
@@ -598,8 +683,9 @@
     <div class="secao-header"><h2 class="secao-titulo">RITS</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="barra-busca" style="--cor-secao:var(--rits);">
-      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
       <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
     </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
@@ -612,8 +698,9 @@
     <div class="secao-header"><h2 class="secao-titulo">Comissão Eleitoral</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="barra-busca" style="--cor-secao:var(--eleitoral);">
-      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
       <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
     </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
@@ -624,6 +711,14 @@
 </main>
 
 <div id="preview-flutuante"></div>
+
+<div id="modal-visualizar" class="modal-overlay" onclick="if(event.target===this){fecharModalVisualizacao();}">
+  <div class="modal-conteudo">
+    <button class="modal-fechar" onclick="fecharModalVisualizacao()" aria-label="Fechar">✕</button>
+    <div class="modal-carregando" id="modal-carregando-msg">Carregando documento…</div>
+    <iframe id="modal-iframe" title="Visualização do documento"></iframe>
+  </div>
+</div>
 
 <footer>
   PLATAS — Plataforma de Atas da Engenharia de Produção · Universidade Federal do Amazonas<br>
@@ -710,7 +805,7 @@
       const imprimirUrl = f.webContentLink || f.webViewLink;
       linhas += `<tr>
         <td><span class="titulo-doc">${f.name}</span></td>
-        <td><a class="acao-btn btn-visualizar" data-file-id="${f.id}" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener">👁️ Visualizar</a></td>
+        <td><a class="acao-btn btn-visualizar" data-file-id="${f.id}" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener" onclick="return abrirModalVisualizacao(event, '${f.id}')">👁️ Visualizar</a></td>
         <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download>⬇️ Baixar</a></td>
       </tr>`;
     });
@@ -928,6 +1023,57 @@
         painelPreview.innerHTML = '';
       });
     });
+  }
+
+  /* ===== MODAL GRANDE — abre ao clicar em "Visualizar" ===== */
+  const modalVisualizar = document.getElementById('modal-visualizar');
+  const modalIframe = document.getElementById('modal-iframe');
+  const modalCarregandoMsg = document.getElementById('modal-carregando-msg');
+
+  function abrirModalVisualizacao(evento, fileId){
+    // Permite o comportamento padrão (abrir em nova aba) se o usuário usar Ctrl/Cmd/clique do meio
+    if(evento.ctrlKey || evento.metaKey || evento.button === 1){
+      return true;
+    }
+    evento.preventDefault();
+
+    // Esconde o preview flutuante, se estiver visível
+    if(painelPreview){
+      painelPreview.style.display = 'none';
+      painelPreview.innerHTML = '';
+    }
+
+    modalCarregandoMsg.style.display = 'flex';
+    modalIframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+    modalVisualizar.classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+
+    modalIframe.onload = () => { modalCarregandoMsg.style.display = 'none'; };
+
+    return false;
+  }
+
+  function fecharModalVisualizacao(){
+    modalVisualizar.classList.remove('aberto');
+    modalIframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && modalVisualizar.classList.contains('aberto')){
+      fecharModalVisualizacao();
+    }
+  });
+
+  /* ===== LIMPAR BUSCA ===== */
+  function limparBusca(botao){
+    const barra = botao.closest('.barra-busca');
+    if(!barra) return;
+    const input = barra.querySelector('input');
+    if(!input) return;
+    input.value = '';
+    buscarAtas(input);
+    input.focus();
   }
 </script>
 
