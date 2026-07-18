@@ -504,7 +504,7 @@
 
     const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
     const fields = encodeURIComponent('files(id,name,modifiedTime,webViewLink,webContentLink,mimeType)');
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=modifiedTime desc&pageSize=200&key=${DRIVE_API_KEY}`;
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=modifiedTime desc&pageSize=200&supportsAllDrives=true&includeItemsFromAllDrives=true&corpora=allDrives&key=${DRIVE_API_KEY}`;
     const resp = await fetch(url);
     if(!resp.ok) throw new Error('Falha na API do Drive: ' + resp.status);
     const data = await resp.json();
