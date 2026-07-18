@@ -277,7 +277,7 @@
     min-width:78px;
     padding:10px 14px;
     border-radius:14px;
-    background:var(--cor-secao, var(--azul-claro));
+    background:linear-gradient(135deg, var(--dourado), var(--dourado-escuro));
     color:#fff;
     box-shadow:0 3px 8px rgba(0,0,0,0.10);
   }
@@ -303,7 +303,87 @@
     color:var(--texto);
   }
 
-  /* ===== TABELA DE ATAS ===== */
+  /* ===== BARRA DE BUSCA ===== */
+  .barra-busca{
+    display:flex;
+    gap:10px;
+    max-width:480px;
+    margin:0 auto 18px;
+    padding:0 6px;
+  }
+  .barra-busca input{
+    flex:1;
+    font-family:'Dosis', Arial, sans-serif;
+    font-size:1rem;
+    padding:11px 16px;
+    border-radius:24px;
+    border:1.5px solid #ddd6c4;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+    min-width:0;
+  }
+  .barra-busca input:focus{
+    border-color:var(--cor-secao, var(--azul-claro));
+    box-shadow:0 0 0 3px rgba(0,0,0,0.06);
+  }
+  .barra-busca button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:50%;
+    background:var(--cor-secao, var(--azul-claro));
+    color:#fff;
+    font-size:1.1rem;
+    cursor:pointer;
+    flex-shrink:0;
+    transition:filter .15s, transform .15s;
+  }
+  .barra-busca button:hover{
+    filter:brightness(1.1);
+    transform:scale(1.05);
+  }
+  .busca-info{
+    text-align:center;
+    font-size:0.85rem;
+    color:#8a8478;
+    margin:-10px auto 14px;
+  }
+
+  /* ===== PREVIEW FLUTUANTE (hover em Visualizar) ===== */
+  #preview-flutuante{
+    position:fixed;
+    display:none;
+    width:360px;
+    height:480px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 14px 40px rgba(0,0,0,0.28);
+    border:1px solid #e4ddc8;
+    overflow:hidden;
+    z-index:9999;
+    pointer-events:none;
+  }
+  #preview-flutuante iframe{
+    width:100%;
+    height:100%;
+    border:none;
+  }
+  #preview-flutuante .preview-carregando{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+    color:#8a8478;
+    font-size:0.9rem;
+    text-align:center;
+    padding:20px;
+  }
+  @media (hover:none){
+    #preview-flutuante{display:none !important;}
+  }
   .tabela-wrap{
     padding:14px;
     overflow-x:auto;
@@ -475,6 +555,10 @@
     <div class="faixa curso"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do Curso</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--azul-claro);">
+      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+    </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
@@ -485,6 +569,10 @@
     <div class="faixa dep"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do DEP</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--verde-claro);">
+      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+    </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
@@ -495,6 +583,10 @@
     <div class="faixa nde"></div>
     <div class="secao-header"><h2 class="secao-titulo">NDE — Núcleo Docente Estruturante</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--violeta);">
+      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+    </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
@@ -505,6 +597,10 @@
     <div class="faixa rits"></div>
     <div class="secao-header"><h2 class="secao-titulo">RITS</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--rits);">
+      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+    </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
@@ -515,6 +611,10 @@
     <div class="faixa eleitoral"></div>
     <div class="secao-header"><h2 class="secao-titulo">Comissão Eleitoral</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--eleitoral);">
+      <input type="text" placeholder="Buscar por palavra ou frase-chave…" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+    </div>
     <div class="card-pasta">
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
@@ -522,6 +622,8 @@
   </section>
 
 </main>
+
+<div id="preview-flutuante"></div>
 
 <footer>
   PLATAS — Plataforma de Atas da Engenharia de Produção · Universidade Federal do Amazonas<br>
@@ -538,6 +640,11 @@
      As pastas do Drive precisam estar como "Qualquer pessoa com o link"
      ===================================================================== */
   const DRIVE_API_KEY = "AIzaSyBbNKudVHG8t-E7h2wYPgJuZsoA9Pmj-5s";
+
+  // Cache em memória dos arquivos já buscados por seção (permite busca instantânea sem nova chamada à API)
+  const cacheArquivos = {};
+  // Cache das pastas percorridas por seção (pasta raiz + subpastas de ano/semestre), usado na busca por conteúdo
+  const cachePastas = {};
 
   function mostrarSecao(id, btn){
     document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
@@ -558,6 +665,16 @@
     const alternativo = nomeArquivo.match(/(19|20)\d{2}/g);
     if(alternativo && alternativo.length > 0) return alternativo[alternativo.length - 1];
     return 'Sem data';
+  }
+
+  function normalizarTexto(texto){
+    // Remove acentos e caixa, para busca mais tolerante
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function escaparParaQuery(texto){
+    // Escapa aspas simples e barras invertidas conforme a sintaxe de query da API do Drive
+    return texto.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
   }
 
   function montarDashboardAnos(arquivos){
@@ -587,8 +704,109 @@
     `;
   }
 
-  async function listarArquivosRecursivo(folderId, profundidade){
+  function montarLinhasTabela(arquivos, cor){
+    let linhas = '';
+    arquivos.forEach(f => {
+      const imprimirUrl = f.webContentLink || f.webViewLink;
+      linhas += `<tr>
+        <td><span class="titulo-doc">${f.name}</span></td>
+        <td><a class="acao-btn btn-visualizar" data-file-id="${f.id}" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener">👁️ Visualizar</a></td>
+        <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download>⬇️ Baixar</a></td>
+      </tr>`;
+    });
+    return linhas;
+  }
+
+  function renderizarTabela(secao, arquivos, avisoExtra){
+    const cor = secao.dataset.cor;
+    const corEscura = secao.dataset.corEscura || cor;
+    const wrap = secao.querySelector('.tabela-wrap');
+
+    if(arquivos.length === 0){
+      wrap.innerHTML = '<div class="estado-msg">Nenhuma ata encontrada com esse critério.</div>';
+      return;
+    }
+
+    const dashboardHtml = montarDashboardAnos(arquivos);
+    const linhas = montarLinhasTabela(arquivos, cor);
+    const aviso = avisoExtra ? `<div class="busca-info">${avisoExtra}</div>` : '';
+
+    wrap.innerHTML = `${dashboardHtml}${aviso}<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
+      <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
+      <tbody>${linhas}</tbody>
+    </table>`;
+
+    ativarPreviewHover(wrap);
+  }
+
+  async function buscarConteudoNoDrive(secao, termoOriginal){
+    const pastas = cachePastas[secao.id];
+    if(!pastas || pastas.length === 0) return [];
+
+    const termoEscapado = escaparParaQuery(termoOriginal);
+    const clausulaPastas = pastas.map(id => `'${id}' in parents`).join(' or ');
+    const q = `(${clausulaPastas}) and fullText contains '${termoEscapado}' and trashed = false`;
+    const query = encodeURIComponent(q);
+    const fields = encodeURIComponent('files(id,name,modifiedTime,webViewLink,webContentLink,mimeType)');
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&pageSize=200&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
+
+    const resp = await fetch(url, { cache: 'no-store' });
+    if(!resp.ok) throw new Error('Falha na busca por conteúdo: ' + resp.status);
+    const data = await resp.json();
+    return (data.files || []).filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+  }
+
+  async function buscarAtas(inputEl){
+    if(!inputEl) return;
+    const secao = inputEl.closest('.secao');
+    if(!secao) return;
+
+    const termoOriginal = inputEl.value.trim();
+    const termoNormalizado = normalizarTexto(termoOriginal);
+    const todosArquivos = cacheArquivos[secao.id] || [];
+
+    if(termoNormalizado === ''){
+      renderizarTabela(secao, todosArquivos);
+      return;
+    }
+
+    // 1) Filtro instantâneo por nome do arquivo (não depende de rede)
+    const termos = termoNormalizado.split(/\s+/).filter(Boolean);
+    const porNome = todosArquivos.filter(f => {
+      const nomeNormalizado = normalizarTexto(f.name);
+      return termos.every(t => nomeNormalizado.includes(t));
+    });
+
+    renderizarTabela(secao, porNome, '🔎 Buscando também dentro do conteúdo dos documentos…');
+
+    // 2) Busca dentro do conteúdo dos PDFs (usa o texto/OCR que o próprio Drive já extraiu)
+    try{
+      const porConteudo = await buscarConteudoNoDrive(secao, termoOriginal);
+
+      // Une os dois resultados sem duplicar (por id do arquivo)
+      const mapaUnico = new Map();
+      porNome.forEach(f => mapaUnico.set(f.id, f));
+      porConteudo.forEach(f => mapaUnico.set(f.id, f));
+
+      const combinados = Array.from(mapaUnico.values());
+      combinados.sort((a, b) => new Date(b.modifiedTime) - new Date(a.modifiedTime));
+
+      // Só re-renderiza se o texto do campo de busca ainda for o mesmo (usuário não digitou algo novo enquanto isso)
+      if(normalizarTexto(inputEl.value.trim()) === termoNormalizado){
+        renderizarTabela(secao, combinados);
+      }
+    }catch(err){
+      console.error(err);
+      // Mantém os resultados por nome já exibidos; apenas remove o aviso de busca em andamento
+      if(normalizarTexto(inputEl.value.trim()) === termoNormalizado){
+        renderizarTabela(secao, porNome);
+      }
+    }
+  }
+
+  async function listarArquivosRecursivo(folderId, profundidade, idsColetados){
     profundidade = profundidade || 0;
+    if(idsColetados) idsColetados.push(folderId);
     if(profundidade > 4) return []; // limite de segurança contra loops
 
     const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
@@ -613,7 +831,7 @@
     // Busca dentro de cada subpasta (ex: pastas de ano/semestre) em paralelo
     if(subpastas.length > 0){
       const resultados = await Promise.all(
-        subpastas.map(id => listarArquivosRecursivo(id, profundidade + 1))
+        subpastas.map(id => listarArquivosRecursivo(id, profundidade + 1, idsColetados))
       );
       resultados.forEach(lista => { arquivos = arquivos.concat(lista); });
     }
@@ -623,8 +841,6 @@
 
   async function carregarTabela(secao){
     const folderId = secao.dataset.folder;
-    const cor = secao.dataset.cor;
-    const corEscura = secao.dataset.corEscura || cor;
     const wrap = secao.querySelector('.tabela-wrap');
 
     if(!folderId || folderId === 'COLOQUE_AQUI_O_ID_DA_PASTA'){
@@ -639,10 +855,14 @@
     wrap.innerHTML = '<div class="estado-msg">Carregando atas…</div>';
 
     try{
-      const arquivos = await listarArquivosRecursivo(folderId);
+      const idsColetados = [];
+      const arquivos = await listarArquivosRecursivo(folderId, 0, idsColetados);
 
       // Ordena do mais recente para o mais antigo (cobre arquivos vindos de subpastas diferentes)
       arquivos.sort((a, b) => new Date(b.modifiedTime) - new Date(a.modifiedTime));
+
+      cacheArquivos[secao.id] = arquivos;
+      cachePastas[secao.id] = idsColetados;
 
       if(arquivos.length === 0){
         wrap.innerHTML = '<div class="estado-msg">Nenhuma ata encontrada nesta pasta ainda.</div>';
@@ -650,22 +870,7 @@
         return;
       }
 
-      let linhas = '';
-      arquivos.forEach(f => {
-        const imprimirUrl = f.webContentLink || f.webViewLink;
-        linhas += `<tr>
-          <td><span class="titulo-doc">${f.name}</span></td>
-          <td><a class="acao-btn" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener">👁️ Visualizar</a></td>
-          <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download>⬇️ Baixar</a></td>
-        </tr>`;
-      });
-
-      const dashboardHtml = montarDashboardAnos(arquivos);
-
-      wrap.innerHTML = `${dashboardHtml}<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
-        <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
-        <tbody>${linhas}</tbody>
-      </table>`;
+      renderizarTabela(secao, arquivos);
       secao.dataset.carregado = "1";
 
       // Atualização automática periódica (a cada 2 minutos) para refletir novas atas
@@ -676,6 +881,53 @@
       wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar a lista de atas agora. Tente novamente em instantes.</div>';
       console.error(err);
     }
+  }
+
+  /* ===== PREVIEW FLUTUANTE AO PASSAR O MOUSE EM "VISUALIZAR" ===== */
+  const painelPreview = document.getElementById('preview-flutuante');
+  let previewTimeout = null;
+
+  function posicionarPreview(evento){
+    const margem = 18;
+    const largura = 360;
+    const altura = 480;
+    let x = evento.clientX + margem;
+    let y = evento.clientY + margem;
+
+    if(x + largura > window.innerWidth) x = evento.clientX - largura - margem;
+    if(y + altura > window.innerHeight) y = window.innerHeight - altura - margem;
+    if(y < margem) y = margem;
+
+    painelPreview.style.left = x + 'px';
+    painelPreview.style.top = y + 'px';
+  }
+
+  function ativarPreviewHover(wrap){
+    // Apenas em dispositivos com mouse real (hover); em touch, o clique normal já abre o link
+    if(window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+
+    const botoes = wrap.querySelectorAll('.btn-visualizar');
+    botoes.forEach(btn => {
+      btn.addEventListener('mouseenter', (e) => {
+        const fileId = btn.dataset.fileId;
+        if(!fileId) return;
+        clearTimeout(previewTimeout);
+        previewTimeout = setTimeout(() => {
+          painelPreview.innerHTML = '<div class="preview-carregando">Carregando pré-visualização…</div>';
+          painelPreview.style.display = 'block';
+          posicionarPreview(e);
+          painelPreview.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" loading="lazy" allow="autoplay"></iframe>`;
+        }, 350); // pequeno atraso para evitar carregar ao simplesmente passar o mouse de leve
+      });
+
+      btn.addEventListener('mousemove', posicionarPreview);
+
+      btn.addEventListener('mouseleave', () => {
+        clearTimeout(previewTimeout);
+        painelPreview.style.display = 'none';
+        painelPreview.innerHTML = '';
+      });
+    });
   }
 </script>
 
