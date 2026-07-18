@@ -2,29 +2,46 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
 <title>PLATAS — Plataforma de Atas | Engenharia de Produção UFAM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --dourado:#C9A227;
+    --dourado-escuro:#9c7f1e;
     --azul-claro:#7EC8E3;
+    --azul-escuro:#4a8ca3;
     --verde-claro:#8FBF7F;
+    --verde-escuro:#5f9c53;
     --violeta:#8E7CC3;
+    --violeta-escuro:#6a56a8;
+    --rits:#d98fc4;
+    --rits-escuro:#b95a9c;
+    --eleitoral:#e2a640;
+    --eleitoral-escuro:#c47f1e;
     --branco:#FFFFFF;
     --texto:#2E2A26;
     --sombra: rgba(46,42,38,0.10);
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   body{
-    font-family:'Dosis', sans-serif;
+    font-family:'Dosis', Arial, Helvetica, sans-serif;
     background:var(--branco);
     color:var(--texto);
     min-height:100vh;
     font-size:18px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
   }
+  button{font-family:inherit;}
 
   /* ===== HEADER ===== */
   header.plat-header{
@@ -156,12 +173,12 @@
     outline:3px solid var(--texto);
     outline-offset:2px;
   }
-  .btn-home{background:linear-gradient(135deg, var(--dourado), #b9860f);}
-  .btn-curso{background:linear-gradient(135deg, var(--azul-claro), #4fa8cf);}
-  .btn-dep{background:linear-gradient(135deg, var(--verde-claro), #5f9c53);}
-  .btn-nde{background:linear-gradient(135deg, var(--violeta), #6a56a8);}
-  .btn-rits{background:linear-gradient(135deg, #d98fc4, #b95a9c);}
-  .btn-eleitoral{background:linear-gradient(135deg, #e2a640, #c47f1e);}
+  .btn-home{background:linear-gradient(135deg, var(--dourado), var(--dourado-escuro));}
+  .btn-curso{background:linear-gradient(135deg, var(--azul-claro), var(--azul-escuro));}
+  .btn-dep{background:linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));}
+  .btn-nde{background:linear-gradient(135deg, var(--violeta), var(--violeta-escuro));}
+  .btn-rits{background:linear-gradient(135deg, var(--rits), var(--rits-escuro));}
+  .btn-eleitoral{background:linear-gradient(135deg, var(--eleitoral), var(--eleitoral-escuro));}
 
   /* ===== CONTEÚDO ===== */
   main{
@@ -203,8 +220,8 @@
   .faixa.curso{background:var(--azul-claro);}
   .faixa.dep{background:var(--verde-claro);}
   .faixa.nde{background:var(--violeta);}
-  .faixa.rits{background:#d98fc4;}
-  .faixa.eleitoral{background:#e2a640;}
+  .faixa.rits{background:var(--rits);}
+  .faixa.eleitoral{background:var(--eleitoral);}
 
   .card-pasta{
     background:#fff;
@@ -244,6 +261,48 @@
     color:#fff;
   }
 
+  /* ===== DASHBOARD DE ATAS POR ANO ===== */
+  .dashboard-anos{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin-bottom:18px;
+  }
+  .ano-chip{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:78px;
+    padding:10px 14px;
+    border-radius:14px;
+    background:var(--cor-secao, var(--azul-claro));
+    color:#fff;
+    box-shadow:0 3px 8px rgba(0,0,0,0.10);
+  }
+  .ano-chip .ano-numero{
+    font-size:1.3rem;
+    font-weight:800;
+    line-height:1.1;
+  }
+  .ano-chip .ano-label{
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    opacity:0.92;
+  }
+  .dashboard-total{
+    text-align:center;
+    font-size:0.95rem;
+    color:#6b665f;
+    margin-bottom:14px;
+  }
+  .dashboard-total strong{
+    color:var(--texto);
+  }
+
   /* ===== TABELA DE ATAS ===== */
   .tabela-wrap{
     padding:14px;
@@ -260,19 +319,17 @@
     box-shadow:0 2px 10px rgba(0,0,0,0.05);
   }
   table.atas-tabela thead th{
-    text-align:left;
+    text-align:center;
     padding:16px 20px;
     font-weight:800;
     font-size:0.95rem;
-    letter-spacing:0.4px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
     color:#fff;
-    background:linear-gradient(135deg, var(--cor-secao, var(--azul-claro)), color-mix(in srgb, var(--cor-secao, var(--azul-claro)) 75%, #000));
+    background:linear-gradient(135deg, var(--cor-secao, var(--azul-claro)), var(--cor-secao-escura, var(--azul-escuro)));
+    border-bottom:3px solid rgba(0,0,0,0.12);
     position:sticky;
     top:0;
-  }
-  table.atas-tabela thead th:nth-child(2),
-  table.atas-tabela thead th:nth-child(3){
-    text-align:center;
   }
   table.atas-tabela tbody tr{
     background:#fff;
@@ -290,15 +347,13 @@
   table.atas-tabela tbody td{
     padding:15px 20px;
     vertical-align:middle;
-  }
-  table.atas-tabela tbody td:nth-child(2),
-  table.atas-tabela tbody td:nth-child(3){
     text-align:center;
   }
   .titulo-doc{
     font-weight:700;
-    display:flex;
+    display:inline-flex;
     align-items:center;
+    justify-content:center;
     gap:12px;
     color:#3a352d;
   }
@@ -367,6 +422,8 @@
     body{font-size:16px;}
     .nav-btn{flex:1 1 42%;}
     table.atas-tabela{font-size:0.9rem;}
+    .ano-chip{min-width:64px; padding:8px 10px;}
+    .ano-chip .ano-numero{font-size:1.1rem;}
   }
   @media (max-width: 420px){
     .nav-btn{flex:1 1 100%;}
@@ -414,7 +471,7 @@
     </div>
   </section>
 
-  <section class="secao" id="secao-curso" data-cor="var(--azul-claro)" data-folder="1wLvgfMCMe2BJ1qoPnMIkZi-xdTVYI0F2">
+  <section class="secao" id="secao-curso" data-cor="var(--azul-claro)" data-cor-escura="var(--azul-escuro)" data-folder="1wLvgfMCMe2BJ1qoPnMIkZi-xdTVYI0F2">
     <div class="faixa curso"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do Curso</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
@@ -424,7 +481,7 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
-  <section class="secao" id="secao-dep" data-cor="var(--verde-claro)" data-folder="1jVzVaTBS6q2Vy1_YnyWQCyEMOJWjEOCC">
+  <section class="secao" id="secao-dep" data-cor="var(--verde-claro)" data-cor-escura="var(--verde-escuro)" data-folder="1jVzVaTBS6q2Vy1_YnyWQCyEMOJWjEOCC">
     <div class="faixa dep"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do DEP</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
@@ -434,7 +491,7 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
-  <section class="secao" id="secao-nde" data-cor="var(--violeta)" data-folder="1pG--pcAo9sbgckC5xDcz6L6xf6yDIv9n">
+  <section class="secao" id="secao-nde" data-cor="var(--violeta)" data-cor-escura="var(--violeta-escuro)" data-folder="1pG--pcAo9sbgckC5xDcz6L6xf6yDIv9n">
     <div class="faixa nde"></div>
     <div class="secao-header"><h2 class="secao-titulo">NDE — Núcleo Docente Estruturante</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
@@ -444,7 +501,7 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
-  <section class="secao" id="secao-rits" data-cor="#d98fc4" data-folder="1nCd_peALBv61dwGsTOnK2utFS3lmrngK">
+  <section class="secao" id="secao-rits" data-cor="var(--rits)" data-cor-escura="var(--rits-escuro)" data-folder="1nCd_peALBv61dwGsTOnK2utFS3lmrngK">
     <div class="faixa rits"></div>
     <div class="secao-header"><h2 class="secao-titulo">RITS</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
@@ -454,7 +511,7 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
-  <section class="secao" id="secao-eleitoral" data-cor="#e2a640" data-folder="1CVb2yKCGfm96_u6bPT2c1J2VExhuyy4V">
+  <section class="secao" id="secao-eleitoral" data-cor="var(--eleitoral)" data-cor-escura="var(--eleitoral-escuro)" data-folder="1CVb2yKCGfm96_u6bPT2c1J2VExhuyy4V">
     <div class="faixa eleitoral"></div>
     <div class="secao-header"><h2 class="secao-titulo">Comissão Eleitoral</h2></div>
     <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
@@ -493,9 +550,41 @@
     }
   }
 
-  function formatarData(iso){
-    const d = new Date(iso);
-    return d.toLocaleDateString('pt-BR', { year:'numeric', month:'long' });
+  function extrairAno(nomeArquivo){
+    // Pega os últimos 4 dígitos que aparecem antes da extensão do arquivo (ex: ..._2024.pdf -> 2024)
+    const match = nomeArquivo.match(/(\d{4})(?=\.[a-zA-Z0-9]+$)/);
+    if(match) return match[1];
+    // Alternativa: qualquer sequência de 4 dígitos plausível como ano (19xx ou 20xx)
+    const alternativo = nomeArquivo.match(/(19|20)\d{2}/g);
+    if(alternativo && alternativo.length > 0) return alternativo[alternativo.length - 1];
+    return 'Sem data';
+  }
+
+  function montarDashboardAnos(arquivos){
+    const contagem = {};
+    arquivos.forEach(f => {
+      const ano = extrairAno(f.name);
+      contagem[ano] = (contagem[ano] || 0) + 1;
+    });
+
+    const anos = Object.keys(contagem).sort((a, b) => {
+      if(a === 'Sem data') return 1;
+      if(b === 'Sem data') return -1;
+      return b.localeCompare(a);
+    });
+
+    let chips = '';
+    anos.forEach(ano => {
+      chips += `<div class="ano-chip">
+        <span class="ano-numero">${contagem[ano]}</span>
+        <span class="ano-label">${ano}</span>
+      </div>`;
+    });
+
+    return `
+      <div class="dashboard-total">Total de <strong>${arquivos.length}</strong> ata${arquivos.length === 1 ? '' : 's'} encontrada${arquivos.length === 1 ? '' : 's'}</div>
+      <div class="dashboard-anos">${chips}</div>
+    `;
   }
 
   async function listarArquivosRecursivo(folderId, profundidade){
@@ -505,7 +594,7 @@
     const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
     const fields = encodeURIComponent('files(id,name,modifiedTime,webViewLink,webContentLink,mimeType)');
     const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=modifiedTime desc&pageSize=200&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
-    const resp = await fetch(url);
+    const resp = await fetch(url, { cache: 'no-store' });
     if(!resp.ok) throw new Error('Falha na API do Drive: ' + resp.status);
     const data = await resp.json();
     const itens = data.files || [];
@@ -535,6 +624,7 @@
   async function carregarTabela(secao){
     const folderId = secao.dataset.folder;
     const cor = secao.dataset.cor;
+    const corEscura = secao.dataset.corEscura || cor;
     const wrap = secao.querySelector('.tabela-wrap');
 
     if(!folderId || folderId === 'COLOQUE_AQUI_O_ID_DA_PASTA'){
@@ -570,7 +660,9 @@
         </tr>`;
       });
 
-      wrap.innerHTML = `<table class="atas-tabela" style="--cor-secao:${cor}">
+      const dashboardHtml = montarDashboardAnos(arquivos);
+
+      wrap.innerHTML = `${dashboardHtml}<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
         <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
         <tbody>${linhas}</tbody>
       </table>`;
