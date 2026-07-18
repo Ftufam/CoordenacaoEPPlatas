@@ -246,66 +246,96 @@
 
   /* ===== TABELA DE ATAS ===== */
   .tabela-wrap{
-    padding:10px 4px 4px;
+    padding:14px;
     overflow-x:auto;
   }
   table.atas-tabela{
     width:100%;
-    border-collapse:collapse;
+    border-collapse:separate;
+    border-spacing:0;
     font-size:1rem;
-    min-width:480px;
+    min-width:520px;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
   }
   table.atas-tabela thead th{
     text-align:left;
-    padding:14px 18px;
-    font-weight:700;
+    padding:16px 20px;
+    font-weight:800;
+    font-size:0.95rem;
+    letter-spacing:0.4px;
     color:#fff;
-    background:var(--cor-secao, var(--azul-claro));
+    background:linear-gradient(135deg, var(--cor-secao, var(--azul-claro)), color-mix(in srgb, var(--cor-secao, var(--azul-claro)) 75%, #000));
     position:sticky;
     top:0;
   }
-  table.atas-tabela thead th:first-child{border-radius:0;}
+  table.atas-tabela thead th:nth-child(2),
+  table.atas-tabela thead th:nth-child(3){
+    text-align:center;
+  }
   table.atas-tabela tbody tr{
-    border-bottom:1px solid #f0ead9;
-    transition:background .15s;
+    background:#fff;
+    transition:background .15s, transform .15s;
+  }
+  table.atas-tabela tbody tr:nth-child(even){
+    background:#FBF9F3;
   }
   table.atas-tabela tbody tr:hover{
-    background:#FAF8F3;
+    background:#FFF6E0;
+  }
+  table.atas-tabela tbody tr:not(:last-child) td{
+    border-bottom:1px solid #f0ead9;
   }
   table.atas-tabela tbody td{
-    padding:13px 18px;
+    padding:15px 20px;
     vertical-align:middle;
   }
+  table.atas-tabela tbody td:nth-child(2),
+  table.atas-tabela tbody td:nth-child(3){
+    text-align:center;
+  }
   .titulo-doc{
-    font-weight:600;
+    font-weight:700;
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
+    color:#3a352d;
   }
   .titulo-doc::before{
     content:"📄";
+    font-size:1.2rem;
+    flex-shrink:0;
   }
   .acao-btn{
     display:inline-flex;
     align-items:center;
     gap:6px;
-    padding:8px 14px;
-    border-radius:9px;
+    padding:9px 16px;
+    border-radius:24px;
     text-decoration:none;
     font-weight:700;
-    font-size:0.9rem;
+    font-size:0.88rem;
     color:#fff;
     background:var(--cor-secao, var(--azul-claro));
-    transition:filter .15s, transform .15s;
+    box-shadow:0 2px 6px rgba(0,0,0,0.10);
+    transition:filter .15s, transform .15s, box-shadow .15s;
+    white-space:nowrap;
   }
   .acao-btn:hover{
-    filter:brightness(1.1);
-    transform:translateY(-1px);
+    filter:brightness(1.08);
+    transform:translateY(-2px);
+    box-shadow:0 5px 12px rgba(0,0,0,0.15);
   }
   .acao-btn.secundario{
-    background:transparent;
+    background:#fff;
     color:var(--texto);
-    border:1.5px solid #d8d2c2;
+    border:1.5px solid #ddd6c4;
+    box-shadow:none;
+  }
+  .acao-btn.secundario:hover{
+    background:#FAF7EE;
+    border-color:var(--cor-secao, var(--azul-claro));
   }
   .estado-msg{
     text-align:center;
@@ -380,78 +410,58 @@
   <section class="secao ativa" id="secao-inicio">
     <div style="text-align:center; padding:50px 10px;">
       <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Selecione um colegiado acima para consultar as atas</h2>
-      <p style="color:#7a746a; max-width:620px; margin:0 auto; font-size:1.1rem;">Cada botão abre a tabela correspondente, gerada automaticamente a partir da pasta do Google Drive — sempre atualizada com os documentos mais recentes inseridos pela coordenação.</p>
+      <p style="color:#7a746a; max-width:620px; margin:0 auto; font-size:1.1rem;">Cada botão abre a tabela correspondente, sempre atualizada com os documentos mais recentes inseridos pela coordenação.</p>
     </div>
   </section>
 
   <section class="secao" id="secao-curso" data-cor="var(--azul-claro)" data-folder="1wLvgfMCMe2BJ1qoPnMIkZi-xdTVYI0F2">
     <div class="faixa curso"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do Curso</h2></div>
-    <p class="secao-sub">Atas listadas da mais recente para a mais antiga. Visualize online ou envie para impressão.</p>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="card-pasta">
-      <div class="drive-actions">
-        <span>📁 Pasta no Google Drive</span>
-        <a class="link-externo" href="https://drive.google.com/drive/folders/1wLvgfMCMe2BJ1qoPnMIkZi-xdTVYI0F2?usp=sharing" target="_blank" rel="noopener">Abrir pasta completa ↗</a>
-      </div>
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
-    <p class="aviso-atualiza">🔄 Tabela conectada em tempo real à pasta do Drive — novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
   <section class="secao" id="secao-dep" data-cor="var(--verde-claro)" data-folder="1jVzVaTBS6q2Vy1_YnyWQCyEMOJWjEOCC">
     <div class="faixa dep"></div>
     <div class="secao-header"><h2 class="secao-titulo">Colegiado do DEP</h2></div>
-    <p class="secao-sub">Atas listadas da mais recente para a mais antiga. Visualize online ou envie para impressão.</p>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="card-pasta">
-      <div class="drive-actions">
-        <span>📁 Pasta no Google Drive</span>
-        <a class="link-externo" href="https://drive.google.com/drive/folders/1jVzVaTBS6q2Vy1_YnyWQCyEMOJWjEOCC?usp=sharing" target="_blank" rel="noopener">Abrir pasta completa ↗</a>
-      </div>
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
-    <p class="aviso-atualiza">🔄 Tabela conectada em tempo real à pasta do Drive — novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
   <section class="secao" id="secao-nde" data-cor="var(--violeta)" data-folder="1pG--pcAo9sbgckC5xDcz6L6xf6yDIv9n">
     <div class="faixa nde"></div>
     <div class="secao-header"><h2 class="secao-titulo">NDE — Núcleo Docente Estruturante</h2></div>
-    <p class="secao-sub">Atas listadas da mais recente para a mais antiga. Visualize online ou envie para impressão.</p>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="card-pasta">
-      <div class="drive-actions">
-        <span>📁 Pasta no Google Drive</span>
-        <a class="link-externo" href="https://drive.google.com/drive/folders/1pG--pcAo9sbgckC5xDcz6L6xf6yDIv9n?usp=sharing" target="_blank" rel="noopener">Abrir pasta completa ↗</a>
-      </div>
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
-    <p class="aviso-atualiza">🔄 Tabela conectada em tempo real à pasta do Drive — novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
   <section class="secao" id="secao-rits" data-cor="#d98fc4" data-folder="1nCd_peALBv61dwGsTOnK2utFS3lmrngK">
     <div class="faixa rits"></div>
     <div class="secao-header"><h2 class="secao-titulo">RITS</h2></div>
-    <p class="secao-sub">Atas listadas da mais recente para a mais antiga. Visualize online ou envie para impressão.</p>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="card-pasta">
-      <div class="drive-actions">
-        <span>📁 Pasta no Google Drive</span>
-        <a class="link-externo" href="https://drive.google.com/drive/folders/1nCd_peALBv61dwGsTOnK2utFS3lmrngK?usp=sharing" target="_blank" rel="noopener">Abrir pasta completa ↗</a>
-      </div>
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
-    <p class="aviso-atualiza">🔄 Tabela conectada em tempo real à pasta do Drive — novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
   <section class="secao" id="secao-eleitoral" data-cor="#e2a640" data-folder="1CVb2yKCGfm96_u6bPT2c1J2VExhuyy4V">
     <div class="faixa eleitoral"></div>
     <div class="secao-header"><h2 class="secao-titulo">Comissão Eleitoral</h2></div>
-    <p class="secao-sub">Atas listadas da mais recente para a mais antiga. Visualize online ou envie para impressão.</p>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
     <div class="card-pasta">
-      <div class="drive-actions">
-        <span>📁 Pasta no Google Drive</span>
-        <a class="link-externo" id="link-eleitoral" href="https://drive.google.com/drive/folders/1CVb2yKCGfm96_u6bPT2c1J2VExhuyy4V?usp=sharing" target="_blank" rel="noopener">Abrir pasta completa ↗</a>
-      </div>
       <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
     </div>
-    <p class="aviso-atualiza">🔄 Tabela conectada em tempo real à pasta do Drive — novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
 </main>
@@ -498,7 +508,7 @@
     }
 
     if(!DRIVE_API_KEY || DRIVE_API_KEY.startsWith('COLOQUE')){
-      wrap.innerHTML = '<div class="estado-msg">⚠️ Para gerar a tabela automaticamente, configure a chave da API do Google Drive no código (veja o comentário CONFIGURAÇÃO no início do &lt;script&gt;). Enquanto isso, use o botão "Abrir pasta completa" acima.</div>';
+      wrap.innerHTML = '<div class="estado-msg">⚠️ A tabela ainda não está configurada. Verifique a chave da API no código (comentário CONFIGURAÇÃO no início do &lt;script&gt;).</div>';
       return;
     }
 
@@ -525,12 +535,12 @@
         linhas += `<tr>
           <td><span class="titulo-doc">${f.name}</span></td>
           <td><a class="acao-btn" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener">👁️ Visualizar</a></td>
-          <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener">🖨️ Imprimir</a></td>
+          <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download>⬇️ Baixar</a></td>
         </tr>`;
       });
 
       wrap.innerHTML = `<table class="atas-tabela" style="--cor-secao:${cor}">
-        <thead><tr><th>Título do documento</th><th>Visualizar</th><th>Imprimir</th></tr></thead>
+        <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
         <tbody>${linhas}</tbody>
       </table>`;
       secao.dataset.carregado = "1";
@@ -540,7 +550,7 @@
       secao._intervalo = setInterval(() => carregarTabela(secao), 120000);
 
     }catch(err){
-      wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar a lista automaticamente agora. Use o botão "Abrir pasta completa" acima para acessar as atas.</div>';
+      wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar a lista de atas agora. Tente novamente em instantes.</div>';
       console.error(err);
     }
   }
