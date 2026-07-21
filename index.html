@@ -25,6 +25,14 @@
     --rits-escuro:#b95a9c;
     --eleitoral:#e2a640;
     --eleitoral-escuro:#c47f1e;
+    --domis:#7a8c98;
+    --domis-escuro:#556570;
+    --avaliar:#d1793a;
+    --avaliar-escuro:#a85a24;
+    --defesa:#5aa88f;
+    --defesa-escuro:#3d7a65;
+    --kpis:#c9628a;
+    --kpis-escuro:#a03e64;
     --branco:#FFFFFF;
     --texto:#2E2A26;
     --sombra: rgba(46,42,38,0.10);
@@ -179,6 +187,10 @@
   .btn-nde{background:linear-gradient(135deg, var(--violeta), var(--violeta-escuro));}
   .btn-rits{background:linear-gradient(135deg, var(--rits), var(--rits-escuro));}
   .btn-eleitoral{background:linear-gradient(135deg, var(--eleitoral), var(--eleitoral-escuro));}
+  .btn-domis{background:linear-gradient(135deg, var(--domis), var(--domis-escuro));}
+  .btn-avaliar{background:linear-gradient(135deg, var(--avaliar), var(--avaliar-escuro));}
+  .btn-defesa{background:linear-gradient(135deg, var(--defesa), var(--defesa-escuro));}
+  .btn-kpis{background:linear-gradient(135deg, var(--kpis), var(--kpis-escuro));}
 
   /* ===== CONTEÚDO ===== */
   main{
@@ -222,6 +234,9 @@
   .faixa.nde{background:var(--violeta);}
   .faixa.rits{background:var(--rits);}
   .faixa.eleitoral{background:var(--eleitoral);}
+  .faixa.domis{background:var(--domis);}
+  .faixa.defesa{background:var(--defesa);}
+  .faixa.kpis{background:var(--kpis);}
 
   .card-pasta{
     background:#fff;
@@ -304,6 +319,57 @@
   }
 
   /* ===== BARRA DE BUSCA ===== */
+  /* ===== KPIs ===== */
+  .kpi-cards{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+    margin-bottom:24px;
+  }
+  .kpi-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:130px;
+    padding:14px 18px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--kpis), var(--kpis-escuro));
+    color:#fff;
+    box-shadow:0 3px 8px rgba(0,0,0,0.10);
+  }
+  .kpi-card .kpi-numero{
+    font-size:1.6rem;
+    font-weight:800;
+    line-height:1.1;
+  }
+  .kpi-card .kpi-label{
+    font-size:0.78rem;
+    font-weight:600;
+    text-align:center;
+    margin-top:4px;
+    opacity:0.95;
+  }
+  .kpi-graficos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    padding:10px 4px 4px;
+  }
+  .kpi-grafico-box{
+    background:#fff;
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);
+    border:1px solid #f0ead9;
+    height:320px;
+    position:relative;
+  }
+  @media (max-width:800px){
+    .kpi-graficos{grid-template-columns:1fr;}
+  }
+
   .barra-busca{
     display:flex;
     gap:10px;
@@ -602,35 +668,34 @@
     </div>
     <div class="titulo-bloco">
       <div class="eyebrow">Curso de Engenharia de Produção · UFAM</div>
-      <h1 class="plat-title">Seja bem-vindo(a) à <span class="destaque">Plataforma de Atas</span> (PLATAS)</h1>
-      <p class="subinfo">Desenvolvido por Nilson Barreiros e Jonas Gomes via Claude, GitHub e Google Drive e Google Cloud</p>
-      <span class="versao-badge">Versão 1 · 18 de julho de 2028</span>
+      <h1 class="plat-title">Seja bem-vindo(a) à <span class="destaque">Plataforma de Atas e Acervos Similares</span> (PLATAS)</h1>
+      <p class="subinfo">Desenvolvido por Nilson Barreiros e Jonas Gomes via Claude, GitHub, Firebase, Google Drive e Google Cloud</p>
+      <span class="versao-badge">Versão 1 (Teste Piloto) · 18 de julho de 2028</span>
     </div>
     <div class="logo-lateral">
       <img src="data:image/png;base64,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" alt="Logo UFAM">
     </div>
   </div>
-  <div class="obs-box">
-    <strong>Observação:</strong> as atas estão sendo digitalizadas e, por conta de limitação humana, as atas mais antigas e/ou mais longas encontram-se disponíveis apenas na pasta física.
-    <br><br>
-    <strong>Obs.:</strong> Se você deseja nos ajudar a digitalizar as demais atas, procure o desenvolvedor Jonas Gomes - jgsilva@ufam.edu.br
-  </div>
 </header>
 
 <nav class="plat-nav">
-  <a class="nav-btn btn-home" href="https://www.engproducao.ufam.edu.br/" target="_blank" rel="noopener">🏠 Home da PR</a>
+  <a class="nav-btn btn-avaliar" href="https://form.typeform.com/to/FlEVXN2V" target="_blank" rel="noopener">⭐ Avaliar a Platas</a>
   <button class="nav-btn btn-curso" onclick="mostrarSecao('curso', this)">📘 Colegiado do Curso</button>
   <button class="nav-btn btn-dep" onclick="mostrarSecao('dep', this)">📗 Colegiado do DEP</button>
+  <button class="nav-btn btn-eleitoral" onclick="mostrarSecao('eleitoral', this)">🗳️ Comissão Eleitoral</button>
+  <button class="nav-btn btn-defesa" onclick="mostrarSecao('defesa', this)">🎓 Defesa de PFC/TCC1</button>
+  <button class="nav-btn btn-domis" onclick="mostrarSecao('domis', this)">📄 DOMIS</button>
+  <a class="nav-btn btn-home" href="https://www.engproducao.ufam.edu.br/" target="_blank" rel="noopener">🏠 Home da PR</a>
+  <button class="nav-btn btn-kpis" onclick="mostrarSecao('kpis', this)">📊 KPIs</button>
   <button class="nav-btn btn-nde" onclick="mostrarSecao('nde', this)">📙 NDE</button>
   <button class="nav-btn btn-rits" onclick="mostrarSecao('rits', this)">📕 RITS</button>
-  <button class="nav-btn btn-eleitoral" onclick="mostrarSecao('eleitoral', this)">🗳️ Comissão Eleitoral</button>
 </nav>
 
 <main>
 
   <section class="secao ativa" id="secao-inicio">
     <div style="text-align:center; padding:50px 10px;">
-      <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Selecione um colegiado acima para consultar as atas</h2>
+      <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Escolha um botão acima para visualizar ou baixar o método DOMIS, os KPIS, as atas e demais documentos</h2>
       <p style="color:#7a746a; max-width:620px; margin:0 auto; font-size:1.1rem;">Cada botão abre a tabela correspondente, sempre atualizada com os documentos mais recentes inseridos pela coordenação.</p>
     </div>
   </section>
@@ -710,6 +775,44 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
+  <section class="secao" id="secao-defesa" data-cor="var(--defesa)" data-cor-escura="var(--defesa-escuro)" data-folder="1ahdWP02yaE2F0IO6JXFtFAMObFojuW1m">
+    <div class="faixa defesa"></div>
+    <div class="secao-header"><h2 class="secao-titulo">Defesa de PFC/TCC1</h2></div>
+    <p class="secao-sub">Atas listadas da mais recente para a mais antiga.</p>
+    <div class="barra-busca" style="--cor-secao:var(--defesa);">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
+    </div>
+    <div class="card-pasta">
+      <div class="tabela-wrap"><div class="estado-msg">Carregando atas…</div></div>
+    </div>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novos documentos inseridos pela coordenação aparecem aqui automaticamente.</p>
+  </section>
+
+  <section class="secao" id="secao-domis" data-cor="var(--domis)" data-cor-escura="var(--domis-escuro)" data-arquivo-id="COLOQUE_AQUI_O_ID_DO_ARQUIVO">
+    <div class="faixa domis"></div>
+    <div class="secao-header"><h2 class="secao-titulo">DOMIS</h2></div>
+    <p class="secao-sub">Documento único de referência.</p>
+    <div class="card-pasta">
+      <div class="tabela-wrap" id="wrap-domis">
+        <div class="estado-msg">📎 Este documento ainda será anexado. Assim que o arquivo Word estiver pronto, envie o link de compartilhamento do Google Drive dele para que ele apareça aqui automaticamente, com opções de visualizar e baixar.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="secao-kpis" data-cor="var(--kpis)" data-cor-escura="var(--kpis-escuro)">
+    <div class="faixa kpis"></div>
+    <div class="secao-header"><h2 class="secao-titulo">KPIs</h2></div>
+    <p class="secao-sub">Indicadores e gráficos gerais, reunindo todos os documentos de todas as seções.</p>
+    <div class="card-pasta">
+      <div class="tabela-wrap" id="wrap-kpis">
+        <div class="estado-msg">Carregando indicadores…</div>
+      </div>
+    </div>
+    <p class="aviso-atualiza">🔄 Os indicadores são recalculados sempre que esta seção é aberta.</p>
+  </section>
+
 </main>
 
 <div id="preview-flutuante"></div>
@@ -738,6 +841,58 @@
      ===================================================================== */
   const DRIVE_API_KEY = "AIzaSyBbNKudVHG8t-E7h2wYPgJuZsoA9Pmj-5s";
 
+  /* =====================================================================
+     CONFIGURAÇÃO — PREENCHA A URL DO REALTIME DATABASE DO FIREBASE
+     1) Acesse https://console.firebase.google.com/
+     2) Crie um projeto reaproveitando o projeto "platas-502820" do Google Cloud
+     3) Vá em Build → Realtime Database → Criar banco de dados
+     4) Copie a URL do banco e cole abaixo em FIREBASE_DB_URL
+     5) Configure as regras de segurança (arquivo firebase-regras.json)
+     ===================================================================== */
+  const FIREBASE_DB_URL = "https://platas-8ad47-default-rtdb.firebaseio.com";
+
+  function firebaseConfigurado(){
+    return FIREBASE_DB_URL && !FIREBASE_DB_URL.startsWith('COLOQUE');
+  }
+
+  function urlFirebase(caminho){
+    const base = FIREBASE_DB_URL.endsWith('/') ? FIREBASE_DB_URL : FIREBASE_DB_URL + '/';
+    return `${base}${caminho}.json`;
+  }
+
+  // Incrementa um contador no Firebase (lê o valor atual e grava +1).
+  // É "fire-and-forget": nunca trava a interface, e falha silenciosamente
+  // se o Firebase ainda não estiver configurado.
+  async function incrementarContador(caminho){
+    if(!firebaseConfigurado()) return;
+    try{
+      const respLeitura = await fetch(urlFirebase(caminho), { cache: 'no-store' });
+      const valorAtual = respLeitura.ok ? (await respLeitura.json()) || 0 : 0;
+      await fetch(urlFirebase(caminho), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(valorAtual + 1),
+      });
+    }catch(err){
+      console.error('Falha ao registrar indicador:', err);
+    }
+  }
+
+  async function buscarEstatisticas(){
+    if(!firebaseConfigurado()) return null;
+    try{
+      const resp = await fetch(urlFirebase('stats'), { cache: 'no-store' });
+      if(!resp.ok) return null;
+      return (await resp.json()) || {};
+    }catch(err){
+      console.error('Falha ao buscar indicadores:', err);
+      return null;
+    }
+  }
+
+  // Registra um acesso à PLATAS assim que a página carrega
+  incrementarContador('stats/acessos');
+
   // Cache em memória dos arquivos já buscados por seção (permite busca instantânea sem nova chamada à API)
   const cacheArquivos = {};
   // Cache das pastas percorridas por seção (pasta raiz + subpastas de ano/semestre), usado na busca por conteúdo
@@ -749,6 +904,15 @@
     alvo.classList.add('ativa');
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
+
+    if(id === 'domis'){
+      carregarDocumentoUnico(alvo);
+      return;
+    }
+    if(id === 'kpis'){
+      carregarKPIs(alvo);
+      return;
+    }
     if(alvo.dataset.folder && !alvo.dataset.carregado){
       carregarTabela(alvo);
     }
@@ -801,14 +965,14 @@
     `;
   }
 
-  function montarLinhasTabela(arquivos, cor){
+  function montarLinhasTabela(arquivos, cor, secaoId){
     let linhas = '';
     arquivos.forEach(f => {
       const imprimirUrl = f.webContentLink || f.webViewLink;
       linhas += `<tr>
         <td><span class="titulo-doc">${f.name}</span></td>
-        <td><a class="acao-btn btn-visualizar" data-file-id="${f.id}" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener" onclick="return abrirModalVisualizacao(event, '${f.id}')">👁️ Visualizar</a></td>
-        <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download>⬇️ Baixar</a></td>
+        <td><a class="acao-btn btn-visualizar" data-file-id="${f.id}" style="--cor-secao:${cor}" href="${f.webViewLink}" target="_blank" rel="noopener" onclick="return abrirModalVisualizacao(event, '${f.id}', '${secaoId}')">👁️ Visualizar</a></td>
+        <td><a class="acao-btn secundario" href="${imprimirUrl}" target="_blank" rel="noopener" download onclick="incrementarContador('stats/downloads/${secaoId}')">⬇️ Baixar</a></td>
       </tr>`;
     });
     return linhas;
@@ -825,7 +989,7 @@
     }
 
     const dashboardHtml = montarDashboardAnos(arquivos);
-    const linhas = montarLinhasTabela(arquivos, cor);
+    const linhas = montarLinhasTabela(arquivos, cor, secao.id);
     const aviso = avisoExtra ? `<div class="busca-info">${avisoExtra}</div>` : '';
 
     wrap.innerHTML = `${dashboardHtml}${aviso}<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
@@ -1032,7 +1196,9 @@
   const modalIframe = document.getElementById('modal-iframe');
   const modalCarregandoMsg = document.getElementById('modal-carregando-msg');
 
-  function abrirModalVisualizacao(evento, fileId){
+  function abrirModalVisualizacao(evento, fileId, secaoId){
+    incrementarContador('stats/visualizacoes/' + secaoId);
+
     // Permite o comportamento padrão (abrir em nova aba) se o usuário usar Ctrl/Cmd/clique do meio
     if(evento.ctrlKey || evento.metaKey || evento.button === 1){
       return true;
@@ -1076,6 +1242,237 @@
     input.value = '';
     buscarAtas(input);
     input.focus();
+  }
+
+  /* ===== DOMIS — documento único ===== */
+  async function carregarDocumentoUnico(secao){
+    const fileId = secao.dataset.arquivoId;
+    const wrap = document.getElementById('wrap-domis');
+
+    if(!fileId || fileId === 'COLOQUE_AQUI_O_ID_DO_ARQUIVO'){
+      return; // mantém a mensagem padrão de "aguardando anexo"
+    }
+    if(secao.dataset.carregado) return;
+
+    wrap.innerHTML = '<div class="estado-msg">Carregando documento…</div>';
+
+    try{
+      const fields = encodeURIComponent('id,name,webViewLink,webContentLink');
+      const url = `https://www.googleapis.com/drive/v3/files/${fileId}?fields=${fields}&supportsAllDrives=true&key=${DRIVE_API_KEY}`;
+      const resp = await fetch(url, { cache: 'no-store' });
+      if(!resp.ok) throw new Error('Falha ao buscar documento: ' + resp.status);
+      const arquivo = await resp.json();
+
+      const cor = secao.dataset.cor;
+      const corEscura = secao.dataset.corEscura || cor;
+      const linhas = montarLinhasTabela([arquivo], cor, secao.id);
+
+      wrap.innerHTML = `<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
+        <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
+        <tbody>${linhas}</tbody>
+      </table>`;
+      ativarPreviewHover(wrap);
+      secao.dataset.carregado = "1";
+
+    }catch(err){
+      wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar o documento agora. Tente novamente em instantes.</div>';
+      console.error(err);
+    }
+  }
+
+  /* ===== KPIs — indicadores e gráficos agregados ===== */
+  let chartJsCarregando = null;
+
+  function carregarChartJs(){
+    if(window.Chart) return Promise.resolve();
+    if(chartJsCarregando) return chartJsCarregando;
+
+    chartJsCarregando = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js';
+      script.onload = resolve;
+      script.onerror = () => reject(new Error('Não foi possível carregar a biblioteca de gráficos.'));
+      document.head.appendChild(script);
+    });
+    return chartJsCarregando;
+  }
+
+  async function carregarKPIs(secaoKpis){
+    const wrap = document.getElementById('wrap-kpis');
+    wrap.innerHTML = '<div class="estado-msg">Carregando indicadores…</div>';
+
+    try{
+      await carregarChartJs();
+
+      const secoesDados = Array.from(document.querySelectorAll('.secao[data-folder]'));
+      const dadosPorSecao = [];
+
+      // Mapa id-da-seção → nome de exibição (usado também no painel de uso)
+      const nomePorSecaoId = {};
+      document.querySelectorAll('.secao[id]').forEach(sec => {
+        const tituloEl = sec.querySelector('.secao-titulo');
+        if(tituloEl) nomePorSecaoId[sec.id] = tituloEl.textContent;
+      });
+
+      for(const sec of secoesDados){
+        const idsColetados = [];
+        const arquivos = await listarArquivosRecursivo(sec.dataset.folder, 0, idsColetados);
+        arquivos.sort((a, b) => new Date(b.modifiedTime) - new Date(a.modifiedTime));
+        cacheArquivos[sec.id] = arquivos;
+        cachePastas[sec.id] = idsColetados;
+        const nome = nomePorSecaoId[sec.id] || sec.id;
+        dadosPorSecao.push({ nome, arquivos });
+      }
+
+      const totalGeral = dadosPorSecao.reduce((soma, s) => soma + s.arquivos.length, 0);
+
+      const contagemAnoGeral = {};
+      dadosPorSecao.forEach(s => {
+        s.arquivos.forEach(f => {
+          const ano = extrairAno(f.name);
+          contagemAnoGeral[ano] = (contagemAnoGeral[ano] || 0) + 1;
+        });
+      });
+      const anosOrdenados = Object.keys(contagemAnoGeral).sort((a, b) => {
+        if(a === 'Sem data') return 1;
+        if(b === 'Sem data') return -1;
+        return a.localeCompare(b);
+      });
+
+      // ===== Painel de uso da PLATAS (acessos, visualizações, downloads) =====
+      const estatisticas = await buscarEstatisticas();
+      const totalAcessos = estatisticas && estatisticas.acessos ? estatisticas.acessos : 0;
+      const visualizacoesPorSecao = (estatisticas && estatisticas.visualizacoes) || {};
+      const downloadsPorSecao = (estatisticas && estatisticas.downloads) || {};
+
+      const idsComUso = Array.from(new Set([
+        ...Object.keys(visualizacoesPorSecao),
+        ...Object.keys(downloadsPorSecao),
+      ]));
+      const labelsUso = idsComUso.map(id => nomePorSecaoId[id] || id);
+      const dadosVisualizacoes = idsComUso.map(id => visualizacoesPorSecao[id] || 0);
+      const dadosDownloads = idsComUso.map(id => downloadsPorSecao[id] || 0);
+
+      let cardsHtml = `<div class="dashboard-total">Total geral de <strong>${totalGeral}</strong> documento${totalGeral === 1 ? '' : 's'} em todas as seções</div><div class="kpi-cards">`;
+      dadosPorSecao.forEach(s => {
+        cardsHtml += `<div class="kpi-card"><span class="kpi-numero">${s.arquivos.length}</span><span class="kpi-label">${s.nome}</span></div>`;
+      });
+      cardsHtml += '</div>';
+
+      let painelUsoHtml = '';
+      if(firebaseConfigurado()){
+        painelUsoHtml = `
+          <div class="secao-header" style="margin-top:34px;"><h2 class="secao-titulo" style="font-size:1.3rem;">Painel de Uso da PLATAS</h2></div>
+          <div class="kpi-cards">
+            <div class="kpi-card" style="min-width:200px;"><span class="kpi-numero">${totalAcessos}</span><span class="kpi-label">Número total de acessos à PLATAS</span></div>
+          </div>
+          <div class="kpi-graficos">
+            <div class="kpi-grafico-box"><canvas id="grafico-visualizacoes"></canvas></div>
+            <div class="kpi-grafico-box"><canvas id="grafico-downloads"></canvas></div>
+          </div>`;
+      }else{
+        painelUsoHtml = `
+          <div class="secao-header" style="margin-top:34px;"><h2 class="secao-titulo" style="font-size:1.3rem;">Painel de Uso da PLATAS</h2></div>
+          <div class="estado-msg">⚠️ O painel de uso (acessos, visualizações e downloads) ainda não está configurado. Preencha FIREBASE_DB_URL no início do &lt;script&gt;.</div>`;
+      }
+
+      wrap.innerHTML = `${cardsHtml}
+        <div class="kpi-graficos">
+          <div class="kpi-grafico-box"><canvas id="grafico-colegiado"></canvas></div>
+          <div class="kpi-grafico-box"><canvas id="grafico-ano"></canvas></div>
+        </div>
+        ${painelUsoHtml}`;
+
+      new Chart(document.getElementById('grafico-colegiado').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: dadosPorSecao.map(s => s.nome),
+          datasets: [{
+            label: 'Documentos por seção',
+            data: dadosPorSecao.map(s => s.arquivos.length),
+            backgroundColor: '#c9628a',
+            borderRadius: 8,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, title: { display: true, text: 'Documentos por seção' } },
+          scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        },
+      });
+
+      new Chart(document.getElementById('grafico-ano').getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: anosOrdenados,
+          datasets: [{
+            label: 'Documentos por ano',
+            data: anosOrdenados.map(a => contagemAnoGeral[a]),
+            borderColor: '#C9A227',
+            backgroundColor: 'rgba(201,162,39,0.25)',
+            fill: true,
+            tension: 0.25,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, title: { display: true, text: 'Documentos por ano (todas as seções)' } },
+          scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        },
+      });
+
+      if(firebaseConfigurado()){
+        new Chart(document.getElementById('grafico-visualizacoes').getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: labelsUso,
+            datasets: [{
+              label: 'Documentos visualizados',
+              data: dadosVisualizacoes,
+              backgroundColor: '#7EC8E3',
+              borderRadius: 8,
+            }],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, title: { display: true, text: 'Documentos visualizados por seção' } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+          },
+        });
+
+        new Chart(document.getElementById('grafico-downloads').getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: labelsUso,
+            datasets: [{
+              label: 'Documentos baixados',
+              data: dadosDownloads,
+              backgroundColor: '#8FBF7F',
+              borderRadius: 8,
+            }],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, title: { display: true, text: 'Documentos baixados por seção' } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+          },
+        });
+      }
+
+      secaoKpis.dataset.carregado = "1";
+
+      // Atualização automática periódica (a cada 2 minutos), igual às demais seções
+      clearInterval(secaoKpis._intervalo);
+      secaoKpis._intervalo = setInterval(() => carregarKPIs(secaoKpis), 120000);
+
+    }catch(err){
+      wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar os indicadores agora. Tente novamente em instantes.</div>';
+      console.error(err);
+    }
   }
 </script>
 
