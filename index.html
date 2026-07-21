@@ -23,12 +23,16 @@
     --violeta-escuro:#6a56a8;
     --rits:#d98fc4;
     --rits-escuro:#b95a9c;
+    --questionario:#3d8fa0;
+    --questionario-escuro:#2a6672;
     --eleitoral:#e2a640;
     --eleitoral-escuro:#c47f1e;
     --domis:#7a8c98;
     --domis-escuro:#556570;
     --avaliar:#d1793a;
     --avaliar-escuro:#a85a24;
+    --artigos:#4f8a6b;
+    --artigos-escuro:#356048;
     --defesa:#5aa88f;
     --defesa-escuro:#3d7a65;
     --kpis:#c9628a;
@@ -145,32 +149,32 @@
 
   /* ===== NAV BOTÕES ===== */
   nav.plat-nav{
-    max-width:1200px;
-    margin:30px auto 0;
+    max-width:1300px;
+    margin:26px auto 0;
     padding:0 24px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:16px;
-    justify-content:center;
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:12px;
   }
   .nav-btn{
     border:none;
     cursor:pointer;
     font-family:'Dosis', sans-serif;
     font-weight:700;
-    font-size:1.08rem;
+    font-size:0.92rem;
     color:#fff;
-    padding:16px 26px;
-    border-radius:14px;
-    letter-spacing:0.3px;
-    box-shadow:0 5px 12px var(--sombra);
+    padding:13px 12px;
+    border-radius:12px;
+    letter-spacing:0.2px;
+    box-shadow:0 4px 10px var(--sombra);
     transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
     text-decoration:none;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    gap:9px;
+    gap:7px;
     text-align:center;
+    line-height:1.2;
   }
   .nav-btn:hover{
     transform:translateY(-3px);
@@ -185,10 +189,12 @@
   .btn-curso{background:var(--azul-claro);}
   .btn-dep{background:linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));}
   .btn-nde{background:linear-gradient(135deg, var(--violeta), var(--violeta-escuro));}
+  .btn-questionario{background:linear-gradient(135deg, var(--questionario), var(--questionario-escuro));}
   .btn-rits{background:linear-gradient(135deg, var(--rits), var(--rits-escuro));}
   .btn-eleitoral{background:linear-gradient(135deg, var(--eleitoral), var(--eleitoral-escuro));}
   .btn-domis{background:linear-gradient(135deg, var(--domis), var(--domis-escuro));}
   .btn-avaliar{background:linear-gradient(135deg, var(--avaliar), var(--avaliar-escuro));}
+  .btn-artigos{background:linear-gradient(135deg, var(--artigos), var(--artigos-escuro));}
   .btn-defesa{background:linear-gradient(135deg, var(--defesa), var(--defesa-escuro));}
   .btn-kpis{background:linear-gradient(135deg, var(--kpis), var(--kpis-escuro));}
 
@@ -236,6 +242,7 @@
   .faixa.eleitoral{background:var(--eleitoral);}
   .faixa.domis{background:var(--domis);}
   .faixa.defesa{background:var(--defesa);}
+  .faixa.artigos{background:var(--artigos);}
   .faixa.kpis{background:var(--kpis);}
 
   .card-pasta{
@@ -410,6 +417,154 @@
     .hero-documento{padding:30px 16px;}
     .hero-icone{font-size:2.6rem;}
     .hero-btn{width:100%; justify-content:center;}
+  }
+
+  /* ===== MATRIZ DIOMIS (seção DOMIS) ===== */
+  .diomis-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+    margin-bottom:22px;
+  }
+  .diomis-cabecalho{
+    text-align:center;
+    margin-bottom:26px;
+  }
+  .diomis-titulo-principal{
+    font-size:1.4rem;
+    font-weight:800;
+    color:var(--texto);
+    margin:0 0 6px;
+  }
+  .diomis-subtitulo{
+    font-size:0.95rem;
+    color:#6b665f;
+    margin:0 0 6px;
+  }
+  .diomis-colunas{
+    font-size:0.85rem;
+    font-style:italic;
+    color:#8a8478;
+    margin:0;
+  }
+  .diomis-cards{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .diomis-card{
+    position:relative;
+    background:#fff;
+    border:1px solid #ece4cd;
+    border-radius:16px;
+    padding:24px 24px 24px 64px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  }
+  .diomis-card-num{
+    position:absolute;
+    top:20px;
+    left:20px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--domis), var(--domis-escuro));
+    color:#fff;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.95rem;
+  }
+  .diomis-card-titulo{
+    font-size:1.08rem;
+    font-weight:800;
+    color:var(--texto);
+    margin-bottom:6px;
+  }
+  .diomis-card-desafio{
+    font-size:0.85rem;
+    font-style:italic;
+    color:#8a8478;
+    margin-bottom:16px;
+  }
+  .diomis-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .diomis-campo{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .diomis-campo-larga{
+    grid-column:1 / -1;
+  }
+  .diomis-label{
+    font-size:0.75rem;
+    font-weight:800;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    color:var(--domis-escuro);
+  }
+  .diomis-valor{
+    font-size:0.92rem;
+    color:var(--texto);
+    line-height:1.5;
+  }
+  .diomis-status-badge{
+    display:inline-block;
+    margin-top:16px;
+    padding:6px 16px;
+    border-radius:16px;
+    color:#fff;
+    font-size:0.82rem;
+    font-weight:700;
+  }
+  .diomis-legenda{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center;
+    margin:26px 0 10px;
+    font-size:0.88rem;
+    color:var(--texto);
+  }
+  .diomis-legenda-bola{
+    display:inline-block;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    margin-right:6px;
+    vertical-align:middle;
+  }
+  .diomis-fonte{
+    text-align:center;
+    font-size:0.78rem;
+    color:#a89e88;
+    font-style:italic;
+    margin-top:14px;
+    padding:0 20px;
+  }
+  @media (max-width:700px){
+    .diomis-grid{grid-template-columns:1fr;}
+    .diomis-card{padding:22px 18px 18px 56px;}
+    .diomis-card-num{left:14px; top:16px;}
+  }
+
+  /* Impressão isolada: ao clicar em "Imprimir" na seção DOMIS, esconde todo o resto da página */
+  @media print{
+    body.imprimir-somente-domis *{ visibility:hidden; }
+    body.imprimir-somente-domis #diomis-conteudo-impressao,
+    body.imprimir-somente-domis #diomis-conteudo-impressao *{ visibility:visible; }
+    body.imprimir-somente-domis #diomis-conteudo-impressao{
+      position:absolute;
+      top:0; left:0;
+      width:100%;
+      padding:0;
+    }
+    body.imprimir-somente-domis .diomis-toolbar{ display:none; }
   }
 
   /* ===== KPIs ===== */
@@ -784,16 +939,17 @@
   @media (max-width: 900px){
     .header-inner{grid-template-columns:1fr; justify-items:center;}
     .logo-lateral img{height:80px;}
+    nav.plat-nav{grid-template-columns:repeat(4, 1fr);}
   }
   @media (max-width: 720px){
     body{font-size:16px;}
-    .nav-btn{flex:1 1 42%;}
+    nav.plat-nav{grid-template-columns:repeat(3, 1fr);}
     table.atas-tabela{font-size:0.9rem;}
     .ano-chip{min-width:64px; padding:8px 10px;}
     .ano-chip .ano-numero{font-size:1.1rem;}
   }
   @media (max-width: 420px){
-    .nav-btn{flex:1 1 100%;}
+    nav.plat-nav{grid-template-columns:repeat(2, 1fr);}
     .drive-actions{flex-direction:column; align-items:flex-start;}
   }
 </style>
@@ -820,18 +976,16 @@
 <div class="convocatoria-box">
   <div class="convocatoria-titulo">📢 CONVOCATÓRIA</div>
   <p class="convocatoria-texto">
-    Egressos formados até março/2026. Poderiam, por favor, enviar seu Relatório Final de Estágio, PFC/TCC1 e a Ata de defesa para o e-mail da coordenação
-    <strong>coordproducaoft@ufam.edu.br</strong> para fins de atualização nesta plataforma e nas plataformas REI e PGTCC1.
+    Egressos formados até março/2026, vos convidamos a responder ao <strong>Questionário</strong> (até 14/08) e a participar do <strong>1º Encontro com Egressos</strong> do curso de Engenharia de Produção da FT/UFAM (18h às 20h), via Zoom:
+    <strong><a href="https://tinyurl.com/3k64skyc" target="_blank" rel="noopener" style="color:#8a1414;">https://tinyurl.com/3k64skyc</a></strong>
   </p>
   <p class="convocatoria-texto">
-    Formato do documento (PDF): <strong>ES_NomedoAluno_Ano</strong>; <strong>PFC_NomedoAluno_Ano</strong>; <strong>TCC1_NomedoAluno_Ano</strong>; <strong>Atadefesa_NomedoAluno_Ano</strong>
-  </p>
-  <p class="convocatoria-texto">
-    Agradecemos a colaboração. Coordenação.
+    ID: <strong>924 7161 8997</strong> — Senha: <strong>Sy15dp</strong>
   </p>
 </div>
 
 <nav class="plat-nav">
+  <button class="nav-btn btn-artigos" onclick="mostrarSecao('artigos', this)">📚 Artigos ou Livros Publicados</button>
   <a class="nav-btn btn-avaliar" href="https://form.typeform.com/to/FlEVXN2V" target="_blank" rel="noopener">⭐ Avaliar a Platas</a>
   <button class="nav-btn btn-curso" onclick="mostrarSecao('curso', this)">📘 Colegiado do Curso</button>
   <button class="nav-btn btn-dep" onclick="mostrarSecao('dep', this)">📗 Colegiado do DEP</button>
@@ -841,6 +995,7 @@
   <a class="nav-btn btn-home" href="https://www.engproducao.ufam.edu.br/" target="_blank" rel="noopener">🏠 Home da PR</a>
   <button class="nav-btn btn-kpis" onclick="mostrarSecao('kpis', this)">📊 KPIs</button>
   <button class="nav-btn btn-nde" onclick="mostrarSecao('nde', this)">📙 NDE</button>
+  <a class="nav-btn btn-questionario" href="https://form.typeform.com/to/WbGWDwqy?typeform-source=ftufam.github.io" target="_blank" rel="noopener">📋 Questionário</a>
   <button class="nav-btn btn-rits" onclick="mostrarSecao('rits', this)">📕 RITS</button>
 </nav>
 
@@ -928,6 +1083,21 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novas atas inseridas pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
+  <section class="secao" id="secao-artigos" data-cor="var(--artigos)" data-cor-escura="var(--artigos-escuro)" data-folder="1pjxP4fc0GC75E9QFzD_eJB7C46MexyMy">
+    <div class="faixa artigos"></div>
+    <div class="secao-header"><h2 class="secao-titulo">Artigos ou Livros Publicados</h2></div>
+    <p class="secao-sub">Documentos listados do mais recente para o mais antigo.</p>
+    <div class="barra-busca" style="--cor-secao:var(--artigos);">
+      <input type="text" placeholder="Procure o documento por uma palavra ou frase chaves" onkeydown="if(event.key==='Enter'){buscarAtas(this);}">
+      <button type="button" onclick="buscarAtas(this.previousElementSibling)" aria-label="Buscar">🔍</button>
+      <button type="button" class="btn-limpar" onclick="limparBusca(this)" aria-label="Limpar busca">Limpar tudo</button>
+    </div>
+    <div class="card-pasta">
+      <div class="tabela-wrap"><div class="estado-msg">Carregando documentos…</div></div>
+    </div>
+    <p class="aviso-atualiza">🔄 Sempre atualizado: novos artigos e livros inseridos pela coordenação aparecem aqui automaticamente.</p>
+  </section>
+
   <section class="secao" id="secao-defesa" data-cor="var(--defesa)" data-cor-escura="var(--defesa-escuro)" data-folder="1ahdWP02yaE2F0IO6JXFtFAMObFojuW1m">
     <div class="faixa defesa"></div>
     <div class="secao-header"><h2 class="secao-titulo">Defesa de PFC/TCC1</h2></div>
@@ -943,13 +1113,13 @@
     <p class="aviso-atualiza">🔄 Sempre atualizado: novos documentos inseridos pela coordenação aparecem aqui automaticamente.</p>
   </section>
 
-  <section class="secao" id="secao-domis" data-cor="var(--domis)" data-cor-escura="var(--domis-escuro)" data-arquivo-id="COLOQUE_AQUI_O_ID_DO_ARQUIVO">
+  <section class="secao" id="secao-domis" data-cor="var(--domis)" data-cor-escura="var(--domis-escuro)">
     <div class="faixa domis"></div>
     <div class="secao-header"><h2 class="secao-titulo">DOMIS</h2></div>
-    <p class="secao-sub">Documento único de referência.</p>
+    <p class="secao-sub">Método DIOMIS — Subdesafios ligados à PLATAS (SWOT do PE-DEP e Diagnósticos da Coordenação).</p>
     <div class="card-pasta">
       <div class="tabela-wrap" id="wrap-domis">
-        <div class="estado-msg">📎 Este documento ainda será anexado. Assim que o arquivo Word estiver pronto, envie o link de compartilhamento do Google Drive dele para que ele apareça aqui automaticamente, com opções de visualizar e baixar.</div>
+        <div class="estado-msg">Carregando matriz…</div>
       </div>
     </div>
   </section>
@@ -1059,7 +1229,7 @@
     if(btn) btn.classList.add('active');
 
     if(id === 'domis'){
-      carregarDocumentoUnico(alvo);
+      renderizarMatrizDiomis(alvo);
       return;
     }
     if(id === 'kpis'){
@@ -1442,44 +1612,160 @@
   }
 
   /* ===== DOMIS — documento único ===== */
-  async function carregarDocumentoUnico(secao){
-    const fileId = secao.dataset.arquivoId;
+  const MATRIZ_DIOMIS = [
+    {
+      subdesafio: 'Despadronização da nomenclatura dos documentos dificulta rastreamento e acessibilidade',
+      desafioCentral: 'Desafio central: 675 — Fluxo de processos administrativos despadronizados (P)',
+      importancia: 'INEP – Dimensão 1 (Organização Didático-Pedagógica): a rastreabilidade das decisões do Colegiado e do NDE depende de identificação clara e padronizada de cada documento (tipo, data, seção).',
+      objetivo: 'Definir e implantar um padrão único de nomenclatura para todos os documentos do curso.',
+      meta: 'IDNP = 100% dos documentos novos nomeados conforme o padrão até 2027',
+      indicador: 'Índice de Documentos com Nomenclatura Padronizada (IDNP) = (nº de documentos com nomenclatura padronizada ÷ nº total de documentos) × 100',
+      iniciativa: 'PLATAS — Seção Padrão de Nomenclaturas Digitais. Convenção de nomenclatura por seção + busca por nome/palavra-chave nos módulos Colegiado, DEP, NDE, RITS e Eleitoral.',
+      status: 'Em andamento',
+    },
+    {
+      subdesafio: 'A fragmentação documental em ambientes distintos gera baixa interoperabilidade informacional, retrabalho, perda documental e redução da eficiência operacional.',
+      desafioCentral: 'Desafio central: 675 — Fluxo de processos administrativos despadronizados (P)',
+      importancia: 'INEP – Dimensão 1: a comprovação do funcionamento contínuo dos colegiados exige que as evidências estejam reunidas e localizáveis por comissões avaliadoras; a dispersão documental compromete o tempo de resposta em avaliações in loco e a comprovação de continuidade da gestão acadêmica.',
+      objetivo: 'Centralizar toda a documentação institucional do curso em um único repositório.',
+      meta: 'IDMR = 100% dos documentos centralizados no repositório único até 2027',
+      indicador: 'Índice de Documentos Migrados para o Repositório Central (IDMR) = (nº de documentos centralizados ÷ nº total de documentos identificados) × 100',
+      iniciativa: 'PLATAS como repositório único em nuvem (Google Drive/Cloud), com pastas espelhadas por colegiado.',
+      status: 'Em andamento',
+    },
+    {
+      subdesafio: 'Ausência de um sistema de gestão documental estruturado com indicadores de desempenho (KPIs) para monitorar o acesso aos documentos e a satisfação dos usuários.',
+      desafioCentral: 'Desafio central: 75 — Sistema de gestão informatizado ineficiente (P)',
+      importancia: 'Dimensão 1 (Organização Didático-Pedagógica): a gestão acadêmica deve comprovar, com dados objetivos, a efetividade dos canais de informação e comunicação institucional perante a comunidade acadêmica. A ausência de indicadores de uso e satisfação fragiliza a evidência de transparência e de gestão orientada por dados — características valorizadas tanto na autoavaliação institucional conduzida pela CPA quanto nas avaliações externas do INEP.',
+      objetivo: 'Estruturar um sistema de indicadores (KPIs) que meça o acesso, o uso e a percepção de qualidade dos documentos institucionais pelos usuários da plataforma.',
+      meta: '100% das seções da PLATAS com KPIs monitorados continuamente; NMSU > 8,0 (escala de 1 a 10)',
+      indicador: 'Número Total de Documentos (NTD); Número Total de Documentos por Seção (NTDS); Número Total de Documentos Visualizados por Seção (NTDVS); Número Total de Documentos Baixados por Seção; Nível Médio de Satisfação dos Usuários (NMSU)',
+      iniciativa: 'Módulo KPIs da PLATAS — cards de acesso total, gráficos "Documentos por seção", "Documentos por ano", "Visualizações por seção" e "Downloads por seção", botão de exportação de relatório em PDF; complementado por uma pesquisa de satisfação embutida via Plataforma Typeform na seção Avaliar a Platas.',
+      status: 'Em andamento',
+    },
+    {
+      subdesafio: 'Grande quantidade de atas impressas fisicamente. Ausência de atas, especialmente atas de defesas de PFC/TCC.',
+      desafioCentral: 'Desafio central: 75 — Sistema de gestão informatizado ineficiente (P)',
+      importancia: 'INEP – Dimensão 3: avalia a adequação da infraestrutura de TIC como substituto de processos manuais/físicos na gestão acadêmica.',
+      objetivo: 'Digitalizar integralmente o acervo histórico de atas em papel.',
+      meta: '100% do acervo físico digitalizado até 2027',
+      indicador: '% do acervo físico digitalizado e disponível na PLATAS',
+      iniciativa: 'PLATAS — Levantamento documental no site da UFAM, pastas digitais e físicas. Convocatória para os egressos e professores enviarem os documentos via e-mail/Google Drive para a coordenação. Criação do Núcleo de Modernização Digital com mutirão de digitalização contínua do acervo físico, com indexação e pré-visualização dos documentos.',
+      status: 'Em andamento',
+    },
+  ];
+
+  const CORES_STATUS_DIOMIS = {
+    'Não iniciado': '#b0453f',
+    'Em andamento': '#d9a441',
+    'Concluído': '#4f9a5c',
+  };
+
+  function renderizarMatrizDiomis(secao){
     const wrap = document.getElementById('wrap-domis');
 
-    if(!fileId || fileId === 'COLOQUE_AQUI_O_ID_DO_ARQUIVO'){
-      return; // mantém a mensagem padrão de "aguardando anexo"
-    }
-    if(secao.dataset.carregado) return;
+    let cardsHtml = '';
+    MATRIZ_DIOMIS.forEach((item, i) => {
+      const corStatus = CORES_STATUS_DIOMIS[item.status] || '#8a8478';
+      cardsHtml += `
+        <div class="diomis-card">
+          <div class="diomis-card-num">${i + 1}</div>
+          <div class="diomis-card-titulo">${item.subdesafio}</div>
+          <div class="diomis-card-desafio">${item.desafioCentral}</div>
+          <div class="diomis-grid">
+            <div class="diomis-campo"><span class="diomis-label">Importância (INEP/SINAES)</span><span class="diomis-valor">${item.importancia}</span></div>
+            <div class="diomis-campo"><span class="diomis-label">Objetivo</span><span class="diomis-valor">${item.objetivo}</span></div>
+            <div class="diomis-campo"><span class="diomis-label">Meta (2027)</span><span class="diomis-valor">${item.meta}</span></div>
+            <div class="diomis-campo"><span class="diomis-label">Indicador</span><span class="diomis-valor">${item.indicador}</span></div>
+            <div class="diomis-campo diomis-campo-larga"><span class="diomis-label">Iniciativa (PLATAS)</span><span class="diomis-valor">${item.iniciativa}</span></div>
+          </div>
+          <div class="diomis-status-badge" style="background:${corStatus}">${item.status}</div>
+        </div>`;
+    });
 
-    wrap.innerHTML = '<div class="estado-msg">Carregando documento…</div>';
+    wrap.innerHTML = `
+      <div id="diomis-conteudo-impressao">
+        <div class="diomis-toolbar">
+          <button type="button" class="btn-exportar-pdf" onclick="imprimirMatrizDiomis()">🖨️ Imprimir</button>
+          <button type="button" class="btn-exportar-pdf" onclick="exportarMatrizDiomisPDF(this)">📄 Baixar em PDF</button>
+        </div>
+        <div class="diomis-cabecalho">
+          <h3 class="diomis-titulo-principal">Método DIOMIS — Subdesafios ligados à PLATAS</h3>
+          <p class="diomis-subtitulo">SWOT do PE-DEP e Diagnósticos da Coordenação · Nível Tático-Operacional · V1 · 18/07/2026</p>
+          <p class="diomis-colunas">Desafios · Importância · Objetivo · Meta · Indicador · Iniciativa · Status</p>
+        </div>
+        <div class="diomis-cards">${cardsHtml}</div>
+        <div class="diomis-legenda">
+          <span><span class="diomis-legenda-bola" style="background:${CORES_STATUS_DIOMIS['Não iniciado']}"></span> Não iniciado</span>
+          <span><span class="diomis-legenda-bola" style="background:${CORES_STATUS_DIOMIS['Em andamento']}"></span> Em andamento</span>
+          <span><span class="diomis-legenda-bola" style="background:${CORES_STATUS_DIOMIS['Concluído']}"></span> Concluído</span>
+        </div>
+        <p class="diomis-fonte">Fonte dos desafios centrais: subplanilha SWOT do arquivo PE_DEP_v7_01_11_2019.xlsx (coluna 3.5.2 "Pontos Fracos", pesos da Matriz SCORE). Subdesafios definidos com base no conteúdo funcional da PLATAS (módulos Colegiado do Curso, DEP, NDE, RITS, Comissão Eleitoral, KPIs e DOMIS).</p>
+      </div>`;
+
+    secao.dataset.carregado = "1";
+  }
+
+  function imprimirMatrizDiomis(){
+    document.body.classList.add('imprimir-somente-domis');
+    window.print();
+  }
+  window.addEventListener('afterprint', () => {
+    document.body.classList.remove('imprimir-somente-domis');
+  });
+
+  async function exportarMatrizDiomisPDF(botao){
+    const textoOriginal = botao.textContent;
+    botao.disabled = true;
+    botao.textContent = '⏳ Gerando PDF…';
 
     try{
-      const fields = encodeURIComponent('id,name,webViewLink,webContentLink');
-      const url = `https://www.googleapis.com/drive/v3/files/${fileId}?fields=${fields}&supportsAllDrives=true&key=${DRIVE_API_KEY}`;
-      const resp = await fetch(url, { cache: 'no-store' });
-      if(!resp.ok) throw new Error('Falha ao buscar documento: ' + resp.status);
-      const arquivo = await resp.json();
+      await carregarLibsPdf();
 
-      const cor = secao.dataset.cor;
-      const corEscura = secao.dataset.corEscura || cor;
-      const imprimirUrl = arquivo.webContentLink || arquivo.webViewLink;
+      const alvo = document.getElementById('diomis-conteudo-impressao');
+      const canvas = await html2canvas(alvo, { backgroundColor: '#ffffff', scale: 2 });
+      const imagemDados = canvas.toDataURL('image/png');
 
-      wrap.innerHTML = `
-        <div class="hero-documento" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
-          <div class="hero-icone">📄</div>
-          <div class="hero-nome">${arquivo.name}</div>
-          <div class="hero-descricao">Documento único de referência do DOMIS</div>
-          <div class="hero-acoes">
-            <a class="acao-btn btn-visualizar hero-btn" data-file-id="${arquivo.id}" style="--cor-secao:${cor}" href="${arquivo.webViewLink}" target="_blank" rel="noopener" onclick="return abrirModalVisualizacao(event, '${arquivo.id}', '${secao.id}')">👁️ Visualizar</a>
-            <a class="acao-btn secundario hero-btn" href="${imprimirUrl}" target="_blank" rel="noopener" download onclick="incrementarContador('stats/downloads/${secao.id}')">🖨️ Baixar / Imprimir</a>
-          </div>
-        </div>`;
-      ativarPreviewHover(wrap);
-      secao.dataset.carregado = "1";
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const larguraPagina = pdf.internal.pageSize.getWidth();
+      const alturaPagina = pdf.internal.pageSize.getHeight();
+      const margem = 10;
+      const larguraUtil = larguraPagina - margem * 2;
+      const alturaImagem = (canvas.height * larguraUtil) / canvas.width;
+      const escala = canvas.width / larguraUtil;
+
+      let alturaConsumidaPx = 0;
+      let primeiraPagina = true;
+
+      while(alturaConsumidaPx < canvas.height){
+        const alturaDisponivelMm = alturaPagina - margem * 2;
+        const alturaFatiaPx = Math.min(alturaDisponivelMm * escala, canvas.height - alturaConsumidaPx);
+
+        const canvasFatia = document.createElement('canvas');
+        canvasFatia.width = canvas.width;
+        canvasFatia.height = alturaFatiaPx;
+        const ctxFatia = canvasFatia.getContext('2d');
+        ctxFatia.drawImage(canvas, 0, alturaConsumidaPx, canvas.width, alturaFatiaPx, 0, 0, canvas.width, alturaFatiaPx);
+
+        const imagemFatia = canvasFatia.toDataURL('image/png');
+        const alturaFatiaMm = alturaFatiaPx / escala;
+
+        if(!primeiraPagina) pdf.addPage();
+        pdf.addImage(imagemFatia, 'PNG', margem, margem, larguraUtil, alturaFatiaMm);
+
+        alturaConsumidaPx += alturaFatiaPx;
+        primeiraPagina = false;
+      }
+
+      pdf.save('PLATAS-Matriz-DIOMIS.pdf');
 
     }catch(err){
-      wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar o documento agora. Tente novamente em instantes.</div>';
       console.error(err);
+      alert('Não foi possível gerar o PDF agora. Tente novamente em instantes.');
+    }finally{
+      botao.disabled = false;
+      botao.textContent = textoOriginal;
     }
   }
 
