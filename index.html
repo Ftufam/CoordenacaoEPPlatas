@@ -276,6 +276,33 @@
     color:#fff;
   }
 
+  /* ===== CONVOCATÓRIA ===== */
+  .convocatoria-box{
+    max-width:1200px;
+    margin:22px auto 0;
+    padding:20px 26px;
+    text-align:center;
+    border:2px solid #d21f1f;
+    border-radius:12px;
+    background:#fff5f5;
+  }
+  .convocatoria-titulo{
+    font-size:1.4rem;
+    font-weight:800;
+    color:#d21f1f;
+    letter-spacing:1px;
+    margin-bottom:10px;
+  }
+  .convocatoria-texto{
+    font-size:1.15rem;
+    color:#b02020;
+    margin:6px 0;
+    line-height:1.55;
+  }
+  .convocatoria-texto strong{
+    color:#8a1414;
+  }
+
   /* ===== DASHBOARD DE ATAS POR ANO ===== */
   .dashboard-anos{
     display:flex;
@@ -316,6 +343,30 @@
   }
   .dashboard-total strong{
     color:var(--texto);
+  }
+  .dashboard-subtitulo{
+    text-align:center;
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:#a89e88;
+    margin:2px 0 8px;
+  }
+  .tipo-chip{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:78px;
+    padding:10px 14px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--cor-secao, var(--azul-claro)), var(--cor-secao-escura, var(--azul-escuro)));
+    color:#fff;
+    box-shadow:0 3px 8px rgba(0,0,0,0.10);
+  }
+  .dashboard-tipos{
+    margin-bottom:20px;
   }
 
   /* ===== DOCUMENTO ÚNICO (DOMIS) — layout hero ===== */
@@ -766,6 +817,20 @@
   </div>
 </header>
 
+<div class="convocatoria-box">
+  <div class="convocatoria-titulo">📢 CONVOCATÓRIA</div>
+  <p class="convocatoria-texto">
+    Egressos formados até março/2026. Poderiam, por favor, enviar seu Relatório Final de Estágio, PFC/TCC1 e a Ata de defesa para o e-mail da coordenação
+    <strong>coordproducaoft@ufam.edu.br</strong> para fins de atualização nesta plataforma e nas plataformas REI e PGTCC1.
+  </p>
+  <p class="convocatoria-texto">
+    Formato do documento (PDF): <strong>ES_NomedoAluno_Ano</strong>; <strong>PFC_NomedoAluno_Ano</strong>; <strong>TCC1_NomedoAluno_Ano</strong>; <strong>Atadefesa_NomedoAluno_Ano</strong>
+  </p>
+  <p class="convocatoria-texto">
+    Agradecemos a colaboração. Coordenação.
+  </p>
+</div>
+
 <nav class="plat-nav">
   <a class="nav-btn btn-avaliar" href="https://form.typeform.com/to/FlEVXN2V" target="_blank" rel="noopener">⭐ Avaliar a Platas</a>
   <button class="nav-btn btn-curso" onclick="mostrarSecao('curso', this)">📘 Colegiado do Curso</button>
@@ -1050,29 +1115,46 @@
   }
 
   function montarDashboardAnos(arquivos){
-    const contagem = {};
+    const contagemAno = {};
+    const contagemTipo = {};
     arquivos.forEach(f => {
       const ano = extrairAno(f.name);
-      contagem[ano] = (contagem[ano] || 0) + 1;
+      contagemAno[ano] = (contagemAno[ano] || 0) + 1;
+      const tipo = extrairTipoDocumento(f.name);
+      contagemTipo[tipo] = (contagemTipo[tipo] || 0) + 1;
     });
 
-    const anos = Object.keys(contagem).sort((a, b) => {
+    const anos = Object.keys(contagemAno).sort((a, b) => {
       if(a === 'Sem data') return 1;
       if(b === 'Sem data') return -1;
       return b.localeCompare(a);
     });
 
-    let chips = '';
+    const ordemTipos = ['Ata', 'Portaria', 'Edital', 'Resolução', 'Outro'];
+    const tipos = ordemTipos.filter(t => contagemTipo[t]);
+
+    let chipsAno = '';
     anos.forEach(ano => {
-      chips += `<div class="ano-chip">
-        <span class="ano-numero">${contagem[ano]}</span>
+      chipsAno += `<div class="ano-chip">
+        <span class="ano-numero">${contagemAno[ano]}</span>
         <span class="ano-label">${ano}</span>
       </div>`;
     });
 
+    let chipsTipo = '';
+    tipos.forEach(tipo => {
+      chipsTipo += `<div class="tipo-chip">
+        <span class="ano-numero">${contagemTipo[tipo]}</span>
+        <span class="ano-label">${tipo}</span>
+      </div>`;
+    });
+
     return `
-      <div class="dashboard-total">Total de <strong>${arquivos.length}</strong> ata${arquivos.length === 1 ? '' : 's'} encontrada${arquivos.length === 1 ? '' : 's'}</div>
-      <div class="dashboard-anos">${chips}</div>
+      <div class="dashboard-total">Total de <strong>${arquivos.length}</strong> documento${arquivos.length === 1 ? '' : 's'} encontrado${arquivos.length === 1 ? '' : 's'}</div>
+      <div class="dashboard-subtitulo">Por ano</div>
+      <div class="dashboard-anos">${chipsAno}</div>
+      <div class="dashboard-subtitulo">Por tipo</div>
+      <div class="dashboard-anos dashboard-tipos">${chipsTipo}</div>
     `;
   }
 
@@ -1093,6 +1175,10 @@
     const cor = secao.dataset.cor;
     const corEscura = secao.dataset.corEscura || cor;
     const wrap = secao.querySelector('.tabela-wrap');
+
+    // Aplica a cor da seção no container inteiro, para os chips do dashboard também herdarem
+    wrap.style.setProperty('--cor-secao', cor);
+    wrap.style.setProperty('--cor-secao-escura', corEscura);
 
     if(arquivos.length === 0){
       wrap.innerHTML = '<div class="estado-msg">Nenhuma ata encontrada com esse critério.</div>';
