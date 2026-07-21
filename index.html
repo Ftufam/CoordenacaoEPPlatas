@@ -318,8 +318,83 @@
     color:var(--texto);
   }
 
-  /* ===== BARRA DE BUSCA ===== */
+  /* ===== DOCUMENTO ÚNICO (DOMIS) — layout hero ===== */
+  .hero-documento{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:44px 24px;
+    gap:10px;
+  }
+  .hero-icone{
+    font-size:3.4rem;
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .hero-nome{
+    font-size:1.25rem;
+    font-weight:800;
+    color:var(--texto);
+    max-width:520px;
+  }
+  .hero-descricao{
+    font-size:0.95rem;
+    color:#8a8478;
+    margin-bottom:10px;
+  }
+  .hero-acoes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+    margin-top:8px;
+  }
+  .hero-btn{
+    font-size:1rem;
+    padding:14px 28px;
+    border-radius:28px;
+  }
+  @media (max-width:480px){
+    .hero-documento{padding:30px 16px;}
+    .hero-icone{font-size:2.6rem;}
+    .hero-btn{width:100%; justify-content:center;}
+  }
+
   /* ===== KPIs ===== */
+  .kpi-topo{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .btn-exportar-pdf{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:24px;
+    border:none;
+    background:linear-gradient(135deg, var(--kpis), var(--kpis-escuro));
+    color:#fff;
+    font-family:'Dosis', Arial, sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    cursor:pointer;
+    box-shadow:0 3px 8px rgba(0,0,0,0.12);
+    transition:filter .15s, transform .15s;
+  }
+  .btn-exportar-pdf:hover{
+    filter:brightness(1.08);
+    transform:translateY(-2px);
+  }
+  .btn-exportar-pdf:disabled{
+    opacity:0.6;
+    cursor:wait;
+    transform:none;
+  }
   .kpi-cards{
     display:flex;
     flex-wrap:wrap;
@@ -928,6 +1003,22 @@
     return 'Sem data';
   }
 
+  const TIPOS_DOCUMENTO = {
+    'ata': 'Ata',
+    'portaria': 'Portaria',
+    'edital': 'Edital',
+    'resolucao': 'Resolução',
+  };
+
+  function extrairTipoDocumento(nomeArquivo){
+    // Usa a primeira palavra do nome do arquivo (antes de "_", espaço ou "-") como palavra-chave do tipo
+    const primeiraPalavra = nomeArquivo.split(/[_\-\s]/)[0];
+    const chave = primeiraPalavra
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+    return TIPOS_DOCUMENTO[chave] || 'Outro';
+  }
+
   function normalizarTexto(texto){
     // Remove acentos e caixa, para busca mais tolerante
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -1265,12 +1356,18 @@
 
       const cor = secao.dataset.cor;
       const corEscura = secao.dataset.corEscura || cor;
-      const linhas = montarLinhasTabela([arquivo], cor, secao.id);
+      const imprimirUrl = arquivo.webContentLink || arquivo.webViewLink;
 
-      wrap.innerHTML = `<table class="atas-tabela" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
-        <thead><tr><th>Ata</th><th>Visualizar</th><th>Baixar</th></tr></thead>
-        <tbody>${linhas}</tbody>
-      </table>`;
+      wrap.innerHTML = `
+        <div class="hero-documento" style="--cor-secao:${cor}; --cor-secao-escura:${corEscura};">
+          <div class="hero-icone">📄</div>
+          <div class="hero-nome">${arquivo.name}</div>
+          <div class="hero-descricao">Documento único de referência do DOMIS</div>
+          <div class="hero-acoes">
+            <a class="acao-btn btn-visualizar hero-btn" data-file-id="${arquivo.id}" style="--cor-secao:${cor}" href="${arquivo.webViewLink}" target="_blank" rel="noopener" onclick="return abrirModalVisualizacao(event, '${arquivo.id}', '${secao.id}')">👁️ Visualizar</a>
+            <a class="acao-btn secundario hero-btn" href="${imprimirUrl}" target="_blank" rel="noopener" download onclick="incrementarContador('stats/downloads/${secao.id}')">🖨️ Baixar / Imprimir</a>
+          </div>
+        </div>`;
       ativarPreviewHover(wrap);
       secao.dataset.carregado = "1";
 
@@ -1327,10 +1424,13 @@
       const totalGeral = dadosPorSecao.reduce((soma, s) => soma + s.arquivos.length, 0);
 
       const contagemAnoGeral = {};
+      const contagemTipoGeral = {};
       dadosPorSecao.forEach(s => {
         s.arquivos.forEach(f => {
           const ano = extrairAno(f.name);
           contagemAnoGeral[ano] = (contagemAnoGeral[ano] || 0) + 1;
+          const tipo = extrairTipoDocumento(f.name);
+          contagemTipoGeral[tipo] = (contagemTipoGeral[tipo] || 0) + 1;
         });
       });
       const anosOrdenados = Object.keys(contagemAnoGeral).sort((a, b) => {
@@ -1338,6 +1438,8 @@
         if(b === 'Sem data') return -1;
         return a.localeCompare(b);
       });
+      const ordemTipos = ['Ata', 'Portaria', 'Edital', 'Resolução', 'Outro'];
+      const tiposOrdenados = ordemTipos.filter(t => contagemTipoGeral[t]);
 
       // ===== Painel de uso da PLATAS (acessos, visualizações, downloads) =====
       const estatisticas = await buscarEstatisticas();
@@ -1353,7 +1455,11 @@
       const dadosVisualizacoes = idsComUso.map(id => visualizacoesPorSecao[id] || 0);
       const dadosDownloads = idsComUso.map(id => downloadsPorSecao[id] || 0);
 
-      let cardsHtml = `<div class="dashboard-total">Total geral de <strong>${totalGeral}</strong> documento${totalGeral === 1 ? '' : 's'} em todas as seções</div><div class="kpi-cards">`;
+      let cardsHtml = `<div class="kpi-topo">
+          <div class="dashboard-total">Total geral de <strong>${totalGeral}</strong> documento${totalGeral === 1 ? '' : 's'} em todas as seções</div>
+          <button type="button" class="btn-exportar-pdf" onclick="exportarRelatorioKPIsPDF(this)">📄 Baixar Relatório em PDF</button>
+        </div>
+        <div class="kpi-cards">`;
       dadosPorSecao.forEach(s => {
         cardsHtml += `<div class="kpi-card"><span class="kpi-numero">${s.arquivos.length}</span><span class="kpi-label">${s.nome}</span></div>`;
       });
@@ -1380,6 +1486,9 @@
         <div class="kpi-graficos">
           <div class="kpi-grafico-box"><canvas id="grafico-colegiado"></canvas></div>
           <div class="kpi-grafico-box"><canvas id="grafico-ano"></canvas></div>
+        </div>
+        <div class="kpi-graficos" style="grid-template-columns:1fr;">
+          <div class="kpi-grafico-box"><canvas id="grafico-tipo"></canvas></div>
         </div>
         ${painelUsoHtml}`;
 
@@ -1420,6 +1529,26 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false }, title: { display: true, text: 'Documentos por ano (todas as seções)' } },
           scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        },
+      });
+
+      new Chart(document.getElementById('grafico-tipo').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: tiposOrdenados,
+          datasets: [{
+            label: 'Documentos por tipo',
+            data: tiposOrdenados.map(t => contagemTipoGeral[t]),
+            backgroundColor: ['#7EC8E3', '#8FBF7F', '#8E7CC3', '#e2a640', '#c9628a'],
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: true, position: 'right' },
+            title: { display: true, text: 'Documentos por tipo (Ata, Portaria, Edital, Resolução)' },
+          },
         },
       });
 
@@ -1472,6 +1601,102 @@
     }catch(err){
       wrap.innerHTML = '<div class="estado-msg">Não foi possível carregar os indicadores agora. Tente novamente em instantes.</div>';
       console.error(err);
+    }
+  }
+
+  /* ===== EXPORTAR RELATÓRIO DE KPIs EM PDF ===== */
+  let libsPdfCarregando = null;
+
+  function carregarLibsPdf(){
+    if(window.jspdf && window.html2canvas) return Promise.resolve();
+    if(libsPdfCarregando) return libsPdfCarregando;
+
+    libsPdfCarregando = new Promise((resolve, reject) => {
+      const scriptHtml2Canvas = document.createElement('script');
+      scriptHtml2Canvas.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      scriptHtml2Canvas.onload = () => {
+        const scriptJsPdf = document.createElement('script');
+        scriptJsPdf.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        scriptJsPdf.onload = resolve;
+        scriptJsPdf.onerror = () => reject(new Error('Não foi possível carregar a biblioteca de PDF.'));
+        document.head.appendChild(scriptJsPdf);
+      };
+      scriptHtml2Canvas.onerror = () => reject(new Error('Não foi possível carregar a biblioteca de captura.'));
+      document.head.appendChild(scriptHtml2Canvas);
+    });
+    return libsPdfCarregando;
+  }
+
+  async function exportarRelatorioKPIsPDF(botao){
+    const textoOriginal = botao.textContent;
+    botao.disabled = true;
+    botao.textContent = '⏳ Gerando PDF…';
+
+    try{
+      await carregarLibsPdf();
+
+      const wrap = document.getElementById('wrap-kpis');
+      const canvas = await html2canvas(wrap, { backgroundColor: '#ffffff', scale: 2 });
+      const imagemDados = canvas.toDataURL('image/png');
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const larguraPagina = pdf.internal.pageSize.getWidth();
+      const alturaPagina = pdf.internal.pageSize.getHeight();
+      const margem = 10;
+      const larguraUtil = larguraPagina - margem * 2;
+      const alturaImagem = (canvas.height * larguraUtil) / canvas.width;
+
+      // Título do relatório
+      pdf.setFontSize(16);
+      pdf.setTextColor(46, 42, 38);
+      pdf.text('PLATAS — Relatório de Indicadores (KPIs)', margem, margem + 4);
+      pdf.setFontSize(9);
+      pdf.setTextColor(107, 102, 95);
+      pdf.text('Gerado em ' + new Date().toLocaleString('pt-BR'), margem, margem + 10);
+
+      let posicaoY = margem + 16;
+      let alturaRestante = alturaImagem;
+      let offsetImagem = 0;
+      const alturaDisponivelPrimeiraPagina = alturaPagina - posicaoY - margem;
+
+      if(alturaImagem <= alturaDisponivelPrimeiraPagina){
+        pdf.addImage(imagemDados, 'PNG', margem, posicaoY, larguraUtil, alturaImagem);
+      }else{
+        // Divide a imagem em múltiplas páginas, já que o painel de KPIs pode ser mais alto que uma folha A4
+        const escala = canvas.width / larguraUtil;
+        let alturaConsumidaPx = 0;
+        let primeiraPagina = true;
+
+        while(alturaConsumidaPx < canvas.height){
+          const alturaDisponivelMm = primeiraPagina ? alturaDisponivelPrimeiraPagina : (alturaPagina - margem * 2);
+          const alturaFatiaPx = Math.min(alturaDisponivelMm * escala, canvas.height - alturaConsumidaPx);
+
+          const canvasFatia = document.createElement('canvas');
+          canvasFatia.width = canvas.width;
+          canvasFatia.height = alturaFatiaPx;
+          const ctxFatia = canvasFatia.getContext('2d');
+          ctxFatia.drawImage(canvas, 0, alturaConsumidaPx, canvas.width, alturaFatiaPx, 0, 0, canvas.width, alturaFatiaPx);
+
+          const imagemFatia = canvasFatia.toDataURL('image/png');
+          const alturaFatiaMm = alturaFatiaPx / escala;
+
+          if(!primeiraPagina) pdf.addPage();
+          pdf.addImage(imagemFatia, 'PNG', margem, primeiraPagina ? posicaoY : margem, larguraUtil, alturaFatiaMm);
+
+          alturaConsumidaPx += alturaFatiaPx;
+          primeiraPagina = false;
+        }
+      }
+
+      pdf.save('PLATAS-Relatorio-KPIs.pdf');
+
+    }catch(err){
+      console.error(err);
+      alert('Não foi possível gerar o PDF agora. Tente novamente em instantes.');
+    }finally{
+      botao.disabled = false;
+      botao.textContent = textoOriginal;
     }
   }
 </script>
