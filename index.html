@@ -309,6 +309,19 @@
   .convocatoria-texto strong{
     color:#8a1414;
   }
+  @keyframes piscarLink{
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .link-piscando{
+    color:#8a1414;
+    font-weight:800;
+    text-decoration:underline;
+    animation:piscarLink 1.4s ease-in-out infinite;
+  }
+  .link-piscando:hover{
+    color:#d21f1f;
+  }
 
   /* ===== DASHBOARD DE ATAS POR ANO ===== */
   .dashboard-anos{
@@ -976,7 +989,7 @@
 <div class="convocatoria-box">
   <div class="convocatoria-titulo">📢 CONVOCATÓRIA</div>
   <p class="convocatoria-texto">
-    Egressos formados até março/2026, vos convidamos a responder ao <strong>Questionário</strong> (até 14/08) e a participar do <strong>1º Encontro com Egressos</strong> do curso de Engenharia de Produção da FT/UFAM (18h às 20h), via Zoom:
+    Egressos formados até março/2026, vos convidamos a responder ao <a href="https://form.typeform.com/to/WbGWDwqy" target="_blank" rel="noopener" class="link-piscando">Questionário</a> (até 14/08) e a participar do <strong>1º Encontro com Egressos</strong> do curso de Engenharia de Produção da FT/UFAM (30/07/26 - 18h às 20h), via Zoom:
     <strong><a href="https://tinyurl.com/3k64skyc" target="_blank" rel="noopener" style="color:#8a1414;">https://tinyurl.com/3k64skyc</a></strong>
   </p>
   <p class="convocatoria-texto">
@@ -991,7 +1004,7 @@
   <button class="nav-btn btn-dep" onclick="mostrarSecao('dep', this)">📗 Colegiado do DEP</button>
   <button class="nav-btn btn-eleitoral" onclick="mostrarSecao('eleitoral', this)">🗳️ Comissão Eleitoral</button>
   <button class="nav-btn btn-defesa" onclick="mostrarSecao('defesa', this)">🎓 Defesa de PFC/TCC1</button>
-  <button class="nav-btn btn-domis" onclick="mostrarSecao('domis', this)">📄 DOMIS</button>
+  <button class="nav-btn btn-domis" onclick="mostrarSecao('domis', this)">📄 DIOMIS</button>
   <a class="nav-btn btn-home" href="https://www.engproducao.ufam.edu.br/" target="_blank" rel="noopener">🏠 Home da PR</a>
   <button class="nav-btn btn-kpis" onclick="mostrarSecao('kpis', this)">📊 KPIs</button>
   <button class="nav-btn btn-nde" onclick="mostrarSecao('nde', this)">📙 NDE</button>
@@ -1003,7 +1016,7 @@
 
   <section class="secao ativa" id="secao-inicio">
     <div style="text-align:center; padding:50px 10px;">
-      <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Escolha um botão acima para visualizar ou baixar o método DOMIS, os KPIS, as atas e demais documentos</h2>
+      <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Escolha um botão acima para visualizar ou baixar o método DIOMIS, os KPIS, as atas e demais documentos</h2>
       <p style="color:#7a746a; max-width:620px; margin:0 auto; font-size:1.1rem;">Cada botão abre a tabela correspondente, sempre atualizada com os documentos mais recentes inseridos pela coordenação.</p>
     </div>
   </section>
@@ -1115,7 +1128,7 @@
 
   <section class="secao" id="secao-domis" data-cor="var(--domis)" data-cor-escura="var(--domis-escuro)">
     <div class="faixa domis"></div>
-    <div class="secao-header"><h2 class="secao-titulo">DOMIS</h2></div>
+    <div class="secao-header"><h2 class="secao-titulo">DIOMIS</h2></div>
     <p class="secao-sub">Método DIOMIS — Subdesafios ligados à PLATAS (SWOT do PE-DEP e Diagnósticos da Coordenação).</p>
     <div class="card-pasta">
       <div class="tabela-wrap" id="wrap-domis">
@@ -1700,7 +1713,7 @@
           <span><span class="diomis-legenda-bola" style="background:${CORES_STATUS_DIOMIS['Em andamento']}"></span> Em andamento</span>
           <span><span class="diomis-legenda-bola" style="background:${CORES_STATUS_DIOMIS['Concluído']}"></span> Concluído</span>
         </div>
-        <p class="diomis-fonte">Fonte dos desafios centrais: subplanilha SWOT do arquivo PE_DEP_v7_01_11_2019.xlsx (coluna 3.5.2 "Pontos Fracos", pesos da Matriz SCORE). Subdesafios definidos com base no conteúdo funcional da PLATAS (módulos Colegiado do Curso, DEP, NDE, RITS, Comissão Eleitoral, KPIs e DOMIS).</p>
+        <p class="diomis-fonte">Fonte dos desafios centrais: subplanilha SWOT do arquivo PE_DEP_v7_01_11_2019.xlsx (coluna 3.5.2 "Pontos Fracos", pesos da Matriz SCORE). Subdesafios definidos com base no conteúdo funcional da PLATAS (módulos Colegiado do Curso, DEP, NDE, RITS, Comissão Eleitoral, KPIs e DIOMIS).</p>
       </div>`;
 
     secao.dataset.carregado = "1";
